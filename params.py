@@ -54,7 +54,7 @@ beta1 = 0.9
 beta2 = 0.999
 
 
-epochnum = 1              # noniid
+epochnum = 5              # noniid
 batch_size = 10           # mnist noniid 设为10
 
 
