@@ -1,5 +1,5 @@
 import random
-import xlwt
+# import xlwt
 import torch
 
 import params
@@ -91,7 +91,7 @@ def CollaborativeModelling():
     # 第三方解密，发送结果给DP、DB
 
 
-def write_excel(tree_list, p_fed, p_root):
+'''def write_excel(tree_list, p_fed, p_root):
     workbook = xlwt.Workbook(encoding='ascii')
     worksheet = workbook.add_sheet('My Worksheet')
 
@@ -108,7 +108,7 @@ def write_excel(tree_list, p_fed, p_root):
     worksheet.write(4, 1, '协作建模下精确度')
     worksheet.write(5, 1, str(p_root))
 
-    workbook.save(params.excel_dir)  # 保存文件
+    workbook.save(params.excel_dir)  # 保存文件'''
 
 
 def all_B(root):
