@@ -1,0 +1,4 @@
+
+cifar10数据文件（data_batch_1等）放在./data/cifar10/origin_data下
+
+mnist数据文件（t10k-images.idx3-ubyte等）放在./data/mnist/origin_data下

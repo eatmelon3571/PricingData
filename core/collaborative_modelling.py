@@ -1,0 +1,172 @@
+import random
+import xlwt
+import torch
+
+import params
+from buyer_provider.data_buyer import DataBuyer
+from buyer_provider.data_provider import DataProvider
+from buyer_provider.third_party import ThirdParty
+from utils import get_net, get_data_loader
+from buyer_provider.fedavg import fedavg
+from core.shapley_value import ShapleyValue
+
+
+def CollaborativeModelling():
+    shapleyValue = ShapleyValue()
+    tp = ThirdParty()
+
+    db = DataBuyer(get_net())
+    dps = []
+    for i in range(params.provider_num):
+        net = get_net()
+        dataloader = get_data_loader(i)
+        dps.append(DataProvider(net, dataloader))
+    print('读取模型完成')
+
+    # 随机聚合顺序
+    order_rand = random_order(params.provider_num)
+    print('聚合顺序', order_rand)
+    # 构成树节点 放入tree_list
+    tree_list = []
+    for i in range(params.provider_num):
+        p_no = order_rand[i]
+        tree_list.append(Tree(p_no, dps[p_no]))
+
+    """# 第三方生成密匙，传给DP、DB
+    public_key, private_key = tp.generate_key()
+    # DP加密model，发给DB
+    for i in range(params.provider_num):
+        dps[i].enctypt()
+    """
+    # 聚合前先FedAvg   p_fed为fedavg的精度
+    _, p_fed = fedavg(tree_list)
+
+    # 开始多次FedAvg、聚合
+    last_node = tree_list[0]         # 上一次最优节点
+    next_node_no = 1                 # 接下来要聚合的开始节点编号
+
+    node_K_list = [last_node]
+
+    while next_node_no < params.provider_num:
+        # print('len(node_K_list[0].children)', len(node_K_list[0].children))
+        # 要聚合的K个节点
+        num = 0
+        while num < params.K - 1 and next_node_no < params.provider_num:
+            node_K_list.append(tree_list[next_node_no])
+            next_node_no += 1
+            num += 1
+
+        # K个provider聚合  可能不足K个
+        num_node = len(node_K_list)
+        # DB计算特征函数v，发送给第三方
+        print('开始计算SV')
+        SVs = shapleyValue.cal_SV_all(node_K_list)
+
+        for i in range(num_node):
+            node_K_list[i].sv = SVs[i]
+            print(SVs[i])
+
+        # 判断是否聚合
+
+        # 用聚合的模型建树
+        net = shapleyValue.root_net
+        # 暂时用第一个孩子的dataloader做聚合节点的dataloader
+        p = DataProvider(net, dataloader=get_data_loader(node_K_list[0].p_no))
+        node = Tree(node_K_list[0].p_no, p)
+        for i in range(num_node):
+            node.children.append(node_K_list[i])
+        node_K_list = [node]
+
+    # 最后剩一个节点为根
+    root = node_K_list[0]
+    root.B = db.B
+    # 根据树分配B
+    all_B(root)
+
+    # 根节点精确度
+    p_root = shapleyValue.root_p
+
+    # 写入excel
+    write_excel(tree_list, p_fed, p_root)
+    # 第三方解密，发送结果给DP、DB
+
+
+def write_excel(tree_list, p_fed, p_root):
+    workbook = xlwt.Workbook(encoding='ascii')
+    worksheet = workbook.add_sheet('My Worksheet')
+
+    worksheet.write(0, 0, 'id')  # 不带样式的写入
+    worksheet.write(1, 0, 'sv')
+    worksheet.write(2, 0, 'B')
+    for i in range(params.provider_num):
+        worksheet.write(0, i + 1, 'provider' + str(i))
+        worksheet.write(1, i + 1, str(tree_list[i].sv))
+        worksheet.write(2, i + 1, str(tree_list[i].B))
+
+    worksheet.write(4, 0, 'fedavg下精确度')
+    worksheet.write(5, 0, str(p_fed))
+    worksheet.write(4, 1, '协作建模下精确度')
+    worksheet.write(5, 1, str(p_root))
+
+    workbook.save(params.excel_dir)  # 保存文件
+
+
+def all_B(root):
+    """给子节点分配B"""
+    l = len(root.children)
+    if l == 0:
+        return
+    sum_SV = 0
+    for c in root.children:
+        print('c.sv', c.sv)
+        sum_SV += c.sv
+
+    if sum_SV != 0:
+        for c in root.children:
+            c.B = root.B * c.sv / sum_SV
+            all_B(c)
+    else:
+        for c in root.children:   # 为避免除0  平均分
+            c.B = root.B / l
+            all_B(c)
+
+
+def random_order(num):
+    # 在[0,num)内生成num个不重复的整数 即随机顺序
+    return random.sample(range(0, num), num)
+
+
+def avg_w(node_K_list):
+    l = len(node_K_list)
+    w = {}
+    for key, values in node_K_list[0].provider.get_net_w().items():
+        w[key] = values
+    for i in range(1, l):
+        for key, values in node_K_list[i].provider.get_net_w().items():
+            w[key] += values
+
+    for key, values in w.items():
+        w[key] = torch.div(w[key], l)
+    return w
+
+
+class Tree:
+    def __init__(self, p_no, provider):
+        self.p_no = p_no
+        self.provider = provider
+
+        self.sibling = None
+        self.children = []
+
+        self.sv = 0
+        self.B = 0
+
+    def copy(self):
+        t = Tree(self.p_no, self.provider.copy())
+        for c in self.children:
+            t.children.append(c.copy())
+        return t
+
+
+if __name__ == '__main__':
+    CollaborativeModelling()
