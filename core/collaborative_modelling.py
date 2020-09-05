@@ -67,15 +67,32 @@ def CollaborativeModelling():
             print(SVs[i])
 
         # 判断是否聚合
-
-        # 用聚合的模型建树
-        net = shapleyValue.root_net
-        # 暂时用第一个孩子的dataloader做聚合节点的dataloader
-        p = DataProvider(net, dataloader=get_data_loader(node_K_list[0].p_no))
-        node = Tree(node_K_list[0].p_no, p)
+        num_aggregation = 0
         for i in range(num_node):
-            node.children.append(node_K_list[i])
-        node_K_list = [node]
+            if node_K_list[i].if_aggregation():
+                num_aggregation += 1
+        if num_aggregation == num_node:   # 全部同意聚合
+            # 用聚合的模型建树
+            net = shapleyValue.root_net
+            # 暂时用第一个孩子的dataloader做聚合节点的dataloader
+            p = DataProvider(net, dataloader=get_data_loader(node_K_list[0].p_no))
+            node = Tree(node_K_list[0].p_no, p)
+            for i in range(num_node):
+                node.children.append(node_K_list[i])
+            # 记录上一次聚合的节点
+            node_K_list = [node]
+        else:
+            # 选出SV最大的节点做根
+            max_node = node_K_list[0]
+            max_sv = node_K_list[0].sv
+            for i in range(1, num_node):
+                if node_K_list[i].sv > max_sv:
+                    max_node = node_K_list[i]
+                    max_sv = node_K_list[i].sv
+            # 记录上一次最优的节点
+            node_K_list = [max_node]
+
+
 
     # 最后剩一个节点为根
     root = node_K_list[0]
@@ -112,7 +129,7 @@ def CollaborativeModelling():
 
 
 def write_txt(tree_list, p_fed, p_root):
-    with open(params.dataset_division_testno + "/1.txt", "w") as f:
+    with open(params.txt_dir, "w") as f:
         f.write("id        sv        B\n")
         for i in range(params.provider_num):
             f.write('provider' + str(i) + "              ")
@@ -175,6 +192,10 @@ class Tree:
 
         self.sv = 0
         self.B = 0
+
+    def if_aggregation(self):
+        # 判断是否聚合
+        return self.sv > 0
 
     def copy(self):
         t = Tree(self.p_no, self.provider.copy())

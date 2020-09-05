@@ -8,7 +8,7 @@ root_dir = './data'
 'mnist'
 'cifar10'
 '''
-dataset = 'cifar10'
+dataset = 'mnist'
 
 
 
@@ -71,6 +71,7 @@ v_S_fed_train_time = 10     # 聚合时联邦学习训练轮数
 
 excel_dir = dataset_division_testno + '/1.xls'
 
+txt_dir = dataset_division_testno + '/2.txt'
 
 
 
