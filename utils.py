@@ -65,7 +65,10 @@ def get_test_dataloader():
 
 def get_optimizer(net):
     if params.dataset == "mnist":
-        return optim.SGD(net.parameters(), lr=params.learning_rate_mnist, momentum=params.momentum)
+        return optim.SGD(net.parameters(),
+                         lr=params.learning_rate_mnist,
+                         momentum=params.momentum,
+                         weight_decay=1e-4)
     elif params.dataset == "cifar10":
         return optim.Adam(net.parameters(),
                           lr=params.learning_rate_cifar10,
