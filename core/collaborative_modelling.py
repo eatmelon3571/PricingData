@@ -86,8 +86,8 @@ def CollaborativeModelling():
     # 根节点精确度
     p_root = shapleyValue.root_p
 
-    # 写入excel
-    write_excel(tree_list, p_fed, p_root)
+    # 写入txt
+    write_txt(tree_list, p_fed, p_root)
     # 第三方解密，发送结果给DP、DB
 
 
@@ -109,6 +109,21 @@ def CollaborativeModelling():
     worksheet.write(5, 1, str(p_root))
 
     workbook.save(params.excel_dir)  # 保存文件'''
+
+
+def write_txt(tree_list, p_fed, p_root):
+    with open(params.dataset_division_testno + "/1.txt", "w") as f:
+        f.write("id        sv        B\n")
+        for i in range(params.provider_num):
+            f.write('provider' + str(i) + "              ")
+            f.write(str(tree_list[i].sv) + "               ")
+            f.write(str(tree_list[i].B))
+            f.write("\n")
+
+        f.write('fedavg下精确度\n')
+        f.write(str(p_fed) + "\n")
+        f.write('协作建模下精确度\n')
+        f.write(str(p_root) + "\n")
 
 
 def all_B(root):

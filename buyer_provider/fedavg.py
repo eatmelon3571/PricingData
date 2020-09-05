@@ -8,6 +8,7 @@ from utils import get_net, get_test_dataloader
 
 
 def fedavg(node_K_list, fed_train_time=params.fed_train_time):
+    # return get_net(), 0   # 测试用
     test_dataloader = get_test_dataloader()
     test_acc = 0
 
@@ -20,7 +21,7 @@ def fedavg(node_K_list, fed_train_time=params.fed_train_time):
     for i in range(l):
         # clients.append(node_K_list[i].provider)
         add_tree_to_list(node_K_list[i], clients)
-    # return get_net(), 0   # 测试用
+
     num_client = len(clients)
     print('训练数量', num_client)
 
