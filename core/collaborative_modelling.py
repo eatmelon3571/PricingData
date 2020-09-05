@@ -132,8 +132,8 @@ def write_txt(tree_list, p_fed, p_root):
     with open(params.txt_dir, "w") as f:
         f.write("id        sv        B\n")
         for i in range(params.provider_num):
-            f.write('provider' + str(i) + "              ")
-            f.write(str(tree_list[i].sv) + "               ")
+            f.write('provider' + str(i) + "                       ")
+            f.write(str(tree_list[i].sv) + "                          ")
             f.write(str(tree_list[i].B))
             f.write("\n")
 
