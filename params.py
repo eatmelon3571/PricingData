@@ -46,7 +46,7 @@ B = 100                   # 准备付的金额
 
 
 # 训练参数
-learning_rate_mnist = 0.03
+learning_rate_mnist = 0.01
 momentum = 0.9
 
 learning_rate_cifar10 = 1e-4      # 0.001收敛快一点
@@ -54,7 +54,7 @@ beta1 = 0.9
 beta2 = 0.999
 
 
-epochnum = 5              # noniid
+epochnum = 1              # noniid
 batch_size = 10           # mnist noniid 设为10
 
 
