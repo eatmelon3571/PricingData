@@ -55,7 +55,7 @@ beta2 = 0.999
 
 
 epochnum = 5              # noniid
-batch_size = 50
+batch_size = 10           # mnist noniid 设为10
 
 
 # 训练过程参数
