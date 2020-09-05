@@ -8,7 +8,7 @@ root_dir = './data'
 'mnist'
 'cifar10'
 '''
-dataset = 'mnist'
+dataset = 'cifar10'
 
 
 
@@ -55,7 +55,7 @@ beta2 = 0.999
 
 
 epochnum = 5              # noniid
-batch_size = 10           # mnist noniid 设为10
+batch_size = 50           # mnist noniid 设为10
 
 
 # 训练过程参数
