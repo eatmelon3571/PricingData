@@ -67,7 +67,7 @@ round_cur = round_start    # 训练当前轮数，从start开始到end结束   �
 K = 3                      # K个provider做聚合
 
 fed_train_time = 0        # 联邦学习训练轮数    mnist iid 10次基本不变了
-v_S_fed_train_time = 20     # 聚合时联邦学习训练轮数
+v_S_fed_train_time = 30     # 聚合时联邦学习训练轮数
 
 excel_dir = dataset_division_testno + '/1.xls'
 

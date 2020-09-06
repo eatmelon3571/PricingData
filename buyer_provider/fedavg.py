@@ -162,8 +162,8 @@ class Server:
                 1]  # _输出的是最大概率的值，predicts输出的是最大概率值所在位置，max()函数中的1表示维度，意思是计算某一行的最大值
             correct += (predicts == labels).sum()
             total += len(images)
-        print('total', total, 'correct', correct)
+        print('total', total)
         p = 1.0 * correct / total
-        print('Accuracy: %.8f' % p)
+        print('Accuracy: %.4f' % p)
 
         return p
