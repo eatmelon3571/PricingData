@@ -4,7 +4,7 @@ import torch.optim as optim
 from torch.autograd import Variable
 import numpy as np
 import params
-from module.net_mnist import NetMNIST
+from module.net_mnist import NetMNIST, NetCNN
 from module.net_cifar import NetCIFAR10
 from datasets.mnist import get_provider_mnist, get_test_mnist
 from datasets.cifar10 import get_provider_cifar10, get_test_cifar10
@@ -28,9 +28,9 @@ def create_dir():
 
 def get_net():
     """获得随机初始值网络"""
-    net = NetMNIST()
+    net = None
     if params.dataset == 'mnist':
-        net = NetMNIST()
+        net = NetCNN()
     elif params.dataset == 'cifar10':
         net = NetCIFAR10()
 

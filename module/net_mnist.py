@@ -44,3 +44,53 @@ class NetMNIST(nn.Module):
         :param w: 类型：字典(Dictionary)
         """
         self.load_state_dict(w)
+
+
+class NetCNN(nn.Module):
+    """
+    具有两个5x5卷积层的CNN
+    （第一个具有32个通道，第二个具有64个通道，每个通道后面都有2x2最大池），
+    一个具有512个单元和ReLu激活的全连接层，
+    以及一个最终的softmax输出层（总参数1663370）
+    softmax的输出层是一个全连接层，所以我们使用一个线性模块就可以
+    """
+
+    def __init__(self):
+        super(NetCNN, self).__init__()
+        self.conv1 = nn.Conv2d(in_channels=1,
+                               out_channels=32,
+                               kernel_size=5)
+        self.conv2 = nn.Conv2d(32, 64, 5)
+        self.mp = nn.MaxPool2d(2)
+        # 全连接
+        self.fc1 = nn.Linear(64 * 4 * 4, 512)
+        # softmax的输出层是一个全连接层，所以我们使用一个线性模块就可以
+        self.fc2 = nn.Linear(512, 10)
+
+    def forward(self, x):
+        in_size = x.size(0)
+        x = self.mp(self.conv1(x))
+        x = self.mp(self.conv2(x))
+
+        x = x.view(in_size, -1)
+
+        x = self.fc1(x)
+        x = F.relu(x)
+        out = self.fc2(x)
+        return out
+
+    def get_w(self):
+        """
+        根据网络结构返回各层权重
+        :return: 类型：字典(Dictionary)  网络权重的深拷贝
+        """
+        w = {}
+        for key, values in self.state_dict().items():
+            w[key] = values.clone().detach()
+        return w
+
+    def update_w(self, w):
+        """
+        :param w: 类型：字典(Dictionary)
+        """
+        self.load_state_dict(w)
