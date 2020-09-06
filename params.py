@@ -28,7 +28,7 @@ data_per_provider_num = 5000
 'iid'
 'noniid'
 '''
-division = 'noniid'
+division = 'iid'
 
 dataset_division = dataset_dir + '/' + division
 test_no = 0                                  # 实验编号
@@ -46,7 +46,7 @@ B = 100                   # 准备付的金额
 
 
 # 训练参数
-learning_rate_mnist = 0.03
+learning_rate_mnist = 0.01
 momentum = 0.9
 
 learning_rate_cifar10 = 1e-4      # 0.001收敛快一点
@@ -55,7 +55,7 @@ beta2 = 0.999
 
 
 epochnum = 5              # noniid
-batch_size = 10           # mnist noniid 设为10
+batch_size = 50           # mnist noniid 设为10
 
 
 # 训练过程参数
@@ -71,7 +71,7 @@ v_S_fed_train_time = 20     # 聚合时联邦学习训练轮数
 
 excel_dir = dataset_division_testno + '/1.xls'
 
-txt_dir = dataset_division_testno + '/2.txt'
+txt_dir = dataset_division_testno + '/3.txt'
 
 
 

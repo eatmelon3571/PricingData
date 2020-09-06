@@ -8,7 +8,7 @@ from data_pre_cifar10.cifar10_decode import decode_cifar10_data_to_file
 
 from utils import create_dir
 
-from core.collaborative_modelling import CollaborativeModelling
+from core.collaborative_modelling import CollaborativeModelling, Original
 
 
 if __name__ == '__main__':
@@ -32,7 +32,10 @@ if __name__ == '__main__':
     # cifar10 noniid 本地迭代次数要小一点
 
     # 协作建模
-    CollaborativeModelling()
+    # CollaborativeModelling()
+
+    # 原本的聚合方法：直接所有节点算SV  不用聚合树
+    Original()
 
 
 

@@ -11,6 +11,45 @@ from buyer_provider.fedavg import fedavg
 from core.shapley_value import ShapleyValue
 
 
+def Original():
+    shapleyValue = ShapleyValue()
+
+    db = DataBuyer(get_net())
+    dps = []
+    for i in range(params.provider_num):
+        net = get_net()
+        dataloader = get_data_loader(i)
+        dps.append(DataProvider(net, dataloader))
+
+    # 构成树节点 放入tree_list
+    tree_list = []
+    for i in range(params.provider_num):
+        tree_list.append(Tree(i, dps[i]))
+
+    num_node = len(tree_list)
+    # DB计算特征函数v，发送给第三方
+    print('开始计算SV')
+    SVs = shapleyValue.cal_SV_all(tree_list)
+
+    for i in range(num_node):
+        tree_list[i].sv = SVs[i]
+        print(SVs[i])
+
+        # 最后剩一个节点为根
+        root = tree_list[0]
+        root.B = db.B
+        # 根据树分配B
+        all_B(root)
+
+        # 根节点精确度
+        p_root = shapleyValue.root_p
+
+        # 写入txt
+        write_txt(tree_list, 0, p_root)
+        # 第三方解密，发送结果给DP、DB
+
+
+
 def CollaborativeModelling():
     shapleyValue = ShapleyValue()
     tp = ThirdParty()

@@ -30,7 +30,7 @@ def get_net():
     """获得随机初始值网络"""
     net = None
     if params.dataset == 'mnist':
-        net = NetCNN()
+        net = NetMNIST()
     elif params.dataset == 'cifar10':
         net = NetCIFAR10()
 
