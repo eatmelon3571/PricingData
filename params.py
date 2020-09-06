@@ -71,7 +71,7 @@ v_S_fed_train_time = 30     # 聚合时联邦学习训练轮数
 
 excel_dir = dataset_division_testno + '/1.xls'
 
-txt_dir = dataset_division_testno + '/3.txt'
+txt_dir = dataset_division_testno + '/4.txt'
 
 
 

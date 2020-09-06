@@ -40,22 +40,23 @@ def Original():
         tree_list[i].sv = SVs[i]
         print(SVs[i])
 
-        # 最后剩一个节点为根
-        root = tree_list[0]
-        root.B = db.B
-        # 根据树分配B
-        all_B(root)
+    # 最后剩一个节点为根
+    root = tree_list[0]
+    root.B = db.B
+    # 根据树分配B
+    all_B(root)
 
-        # 根节点精确度
-        p_root = shapleyValue.root_p
+    # 根节点精确度
+    p_root = shapleyValue.root_p
 
-        # 写入txt
-        write_txt(tree_list, 0, p_root)
-        # 第三方解密，发送结果给DP、DB
+    # 写入txt
+    txt_dir = params.dataset_division_testno + '/5.txt'
+    write_txt(tree_list, 0, p_root, txt_dir)
+    # 第三方解密，发送结果给DP、DB
+    return tree_list
 
 
-
-def CollaborativeModelling():
+def CollaborativeModelling(_tree_list=None):
     shapleyValue = ShapleyValue()
     tp = ThirdParty()
 
@@ -72,9 +73,15 @@ def CollaborativeModelling():
     print('聚合顺序', order_rand)
     # 构成树节点 放入tree_list
     tree_list = []
-    for i in range(params.provider_num):
-        p_no = order_rand[i]
-        tree_list.append(Tree(p_no, dps[p_no]))
+
+    if _tree_list is not None:
+        for i in range(params.provider_num):
+            p_no = order_rand[i]
+            tree_list.append(_tree_list[p_no])
+    else:
+        for i in range(params.provider_num):
+            p_no = order_rand[i]
+            tree_list.append(Tree(p_no, dps[p_no]))
 
     """# 第三方生成密匙，传给DP、DB
     public_key, private_key = tp.generate_key()
@@ -148,7 +155,8 @@ def CollaborativeModelling():
     p_root = shapleyValue.root_p
 
     # 写入txt
-    write_txt(tree_list, p_fed, p_root)
+    txt_dir = params.dataset_division_testno + '/6.txt'
+    write_txt(tree_list, 0, p_root, txt_dir)
     # 第三方解密，发送结果给DP、DB
 
 
@@ -172,8 +180,8 @@ def CollaborativeModelling():
     workbook.save(params.excel_dir)  # 保存文件'''
 
 
-def write_txt(tree_list, p_fed, p_root):
-    with open(params.txt_dir, "w") as f:
+def write_txt(tree_list, p_fed, p_root, txt_dir=params.txt_dir):
+    with open(txt_dir, "w") as f:
         f.write("id        sv        B\n")
         for i in range(params.provider_num):
             f.write('provider' + str(i) + "                       ")
