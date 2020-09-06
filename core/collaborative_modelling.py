@@ -26,6 +26,11 @@ def Original():
     for i in range(params.provider_num):
         tree_list.append(Tree(i, dps[i]))
 
+
+    # 预训练
+    _, p_fed = fedavg(tree_list)
+
+
     num_node = len(tree_list)
     # DB计算特征函数v，发送给第三方
     print('开始计算SV')
