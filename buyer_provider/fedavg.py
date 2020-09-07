@@ -8,7 +8,7 @@ from utils import get_net, get_test_dataloader
 
 
 def fedavg(node_K_list, fed_train_time=params.fed_train_time):
-    return get_net(), 0   # 测试用
+    # return get_net(), 0   # 测试用
     test_dataloader = get_test_dataloader()
     test_acc = 0
 
