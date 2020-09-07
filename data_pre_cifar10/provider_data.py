@@ -125,7 +125,7 @@ def allocation_partialnoniid():
         data_images.append([])
         data_labels.append([])
 
-    for i in range(params.mnist_data_total):
+    for i in range(params.cifar10_data_total):
         label = int(labels[i])
         data_images[label].append(images[i])
         data_labels[label].append(label)
