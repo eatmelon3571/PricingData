@@ -50,7 +50,7 @@ B = 100                   # 准备付的金额
 learning_rate_mnist = 0.01
 momentum = 0.9
 
-learning_rate_cifar10 = 1e-4      # 0.001收敛快一点
+learning_rate_cifar10 = 0.0007      # 0.001收敛快一点
 beta1 = 0.9
 beta2 = 0.999
 
