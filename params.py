@@ -20,7 +20,7 @@ dataset_origin_data = dataset_dir + '/origin_data'   # 原始数据
 dataset_npy_data = dataset_dir + '/npy_data'         # 存放mnist解码后的数据
 
 provider_num = 6
-data_per_provider_num = 5000
+data_per_provider_num = 2000
 
 # 实验数据和存储
 '''
