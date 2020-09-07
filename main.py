@@ -24,8 +24,8 @@ if __name__ == '__main__':
         # 分配数据集
         mnist_allocation()
     elif params.dataset == 'cifar10':
-        decode_cifar10_data_to_file()
-        cifar10_allocation()
+        # decode_cifar10_data_to_file()
+        # cifar10_allocation()
         a = 0
     # '''
 
