@@ -50,7 +50,7 @@ def Original():
     p_root = shapleyValue.root_p
 
     # 写入txt
-    txt_dir = params.dataset_division_testno + '/7.txt'
+    txt_dir = params.dataset_division_testno + '/9.txt'
     write_txt(tree_list, 0, p_root, txt_dir)
     # 第三方解密，发送结果给DP、DB
     return tree_list
@@ -155,7 +155,7 @@ def CollaborativeModelling(_tree_list=None):
     p_root = shapleyValue.root_p
 
     # 写入txt
-    txt_dir = params.dataset_division_testno + '/8.txt'
+    txt_dir = params.dataset_division_testno + '/10.txt'
     write_txt(tree_list, 0, p_root, txt_dir)
     # 第三方解密，发送结果给DP、DB
 
