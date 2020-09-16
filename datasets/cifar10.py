@@ -56,6 +56,23 @@ def get_test_cifar10():
     return test_data_loader
 
 
+def get_test_dataset_cifar10():
+    images_dir = params.dataset_npy_data + '/test_images.npy'
+    labels_dir = params.dataset_npy_data + '/test_labels.npy'
+
+    # image pre-processing
+    pre_process = transforms.Compose([transforms.Normalize(mean=(0.491372549, 0.482352941,
+                                                                 0.446666667),
+                                                           std=(0.247058824, 0.243529412,
+                                                                0.261568627))])
+
+    # dataset and data loader
+    test_dataset = CIFAR10Dataset(images_dir=images_dir,
+                                  labels_dir=labels_dir,
+                                  image_transform=pre_process)
+    return test_dataset
+
+
 class CIFAR10Dataset(Dataset):
     def __init__(self,
                  images_dir,

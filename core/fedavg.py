@@ -1,7 +1,5 @@
-import torch
-import torch.optim as optim
-import torch.nn as nn
 import numpy as np
+import torch
 
 import params
 from utils import get_net, get_test_dataloader
@@ -79,12 +77,6 @@ class Server:
     def update_net_w(self, w):
         self.net.update_w(w)
 
-    def get_lr(self):
-        return self.lr
-
-    def learning_rate_decay(self):
-        self.lr *= 0.99      # FedAvg  CIFAR-10
-
     def add_w(self, client_w):
         """
         增加一个客户端的网络权重（按客户端数据量大小比例）
@@ -119,30 +111,6 @@ class Server:
         self.update_net_w(self.w)
         # 清空计算的    以便下一次计算
         self.clear_w()
-
-    def save_model(self, model_dir):
-        """
-        保存模型
-        """
-        np.save(model_dir, self.net.get_w())
-
-    def load_model(self, model_dir):
-        """
-        加载模型
-        """
-        self.update_net_w(np.load(model_dir, allow_pickle=True).item())
-
-    def save_lr(self, lr_dir):
-        """
-        保存学习率
-        """
-        np.save(lr_dir, self.lr)
-
-    def load_lr(self, lr_dir):
-        """
-        加载学习率
-        """
-        self.lr = np.load(lr_dir)
 
     # 测试
     @torch.no_grad()

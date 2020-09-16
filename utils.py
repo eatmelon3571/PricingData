@@ -6,8 +6,8 @@ import numpy as np
 import params
 from module.net_mnist import NetMNIST, NetCNN
 from module.net_cifar import NetCIFAR10
-from datasets.mnist import get_provider_mnist, get_test_mnist
-from datasets.cifar10 import get_provider_cifar10, get_test_cifar10
+from datasets.mnist import get_provider_mnist, get_test_mnist, get_test_dataset_mnist
+from datasets.cifar10 import get_provider_cifar10, get_test_cifar10, get_test_dataset_cifar10
 
 
 def mkdir(dir):
@@ -61,6 +61,13 @@ def get_test_dataloader():
         return get_test_mnist()
     elif params.dataset == "cifar10":
         return get_test_cifar10()
+
+
+def get_test_dataset():
+    if params.dataset == "mnist":
+        return get_test_dataset_mnist()
+    elif params.dataset == "cifar10":
+        return get_test_dataset_cifar10()
 
 
 def get_optimizer(net):

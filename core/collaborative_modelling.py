@@ -6,12 +6,14 @@ import params
 from buyer_provider.data_buyer import DataBuyer
 from buyer_provider.data_provider import DataProvider
 from buyer_provider.third_party import ThirdParty
+from core.tree import Tree
 from utils import get_net, get_data_loader
-from buyer_provider.fedavg import fedavg
+from core.fedavg import fedavg
 from core.shapley_value import ShapleyValue
 
 
 def Original():
+    """原本聚合方式：FedAvg   +计算SV"""
     shapleyValue = ShapleyValue()
 
     db = DataBuyer(get_net())
@@ -57,6 +59,7 @@ def Original():
 
 
 def CollaborativeModelling(_tree_list=None):
+    """树状聚合方式          +计算SV"""
     shapleyValue = ShapleyValue()
     tp = ThirdParty()
 
@@ -71,26 +74,26 @@ def CollaborativeModelling(_tree_list=None):
     # 随机聚合顺序
     order_rand = random_order(params.provider_num)
     print('聚合顺序', order_rand)
+
     # 构成树节点 放入tree_list
     tree_list = []
 
     if _tree_list is not None:
         for i in range(params.provider_num):
-            p_no = order_rand[i]
-            tree_list.append(_tree_list[p_no])
+            tree_list.append(_tree_list[i])
     else:
         for i in range(params.provider_num):
-            p_no = order_rand[i]
-            tree_list.append(Tree(p_no, dps[p_no]))
+            tree_list.append(Tree(i, dps[i]))
 
     """# 第三方生成密匙，传给DP、DB
     public_key, private_key = tp.generate_key()
     # DP加密model，发给DB
     for i in range(params.provider_num):
         dps[i].enctypt()
-    """
     # 聚合前先FedAvg   p_fed为fedavg的精度
     _, p_fed = fedavg(tree_list)
+    """
+
 
     # 开始多次FedAvg、聚合
     last_node = tree_list[0]         # 上一次最优节点
@@ -233,27 +236,6 @@ def avg_w(node_K_list):
         w[key] = torch.div(w[key], l)
     return w
 
-
-class Tree:
-    def __init__(self, p_no, provider):
-        self.p_no = p_no
-        self.provider = provider
-
-        self.sibling = None
-        self.children = []
-
-        self.sv = 0
-        self.B = 0
-
-    def if_aggregation(self):
-        # 判断是否聚合
-        return self.sv > 0
-
-    def copy(self):
-        t = Tree(self.p_no, self.provider.copy())
-        for c in self.children:
-            t.children.append(c.copy())
-        return t
 
 
 if __name__ == '__main__':

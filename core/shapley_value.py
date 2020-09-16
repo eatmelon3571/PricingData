@@ -1,8 +1,8 @@
 import math
-import torch
-from utils import get_net, get_test_dataloader
-from buyer_provider.fedavg import fedavg
+from core.fedavg import fedavg
+from core.score_avg import score_avg
 import params
+
 
 class ShapleyValue:
 
@@ -102,16 +102,22 @@ class ShapleyValue:
             temp = int(temp / 2)
 
         # 根据index记录v(S)
-        net, v_S = self.v(S)
+        net, v_S = self.v_score_avg(S)
         self.v_all[index] = v_S
 
         return net, v_S
 
-    def v(self, S):
+    def v_fedavg(self, S):
+        """计算价值v：fedavg聚合后的测试集精确度"""
         # 聚合时少训练点
         time = params.v_S_fed_train_time
         print('聚合时fedavg训练次数少一点', time)
         net, v_S = fedavg(S, fed_train_time=time)
+        return net, v_S
+
+    def v_score_avg(self,S):
+        """计算价值v：平均类分数（测试集）后的，测试集精确度"""
+        net, v_S = score_avg(S)
         return net, v_S
 
     def trans(self, n):

@@ -52,6 +52,20 @@ def get_test_mnist():
     return mnist_test_data_loader
 
 
+def get_test_dataset_mnist():
+    images_dir = params.dataset_npy_data + '/test_images.npy'
+    labels_dir = params.dataset_npy_data + '/test_labels.npy'
+
+    # image pre-processing
+    pre_process = transforms.Compose([transforms.Normalize((0.1307,), (0.3081,))])
+
+    # dataset and data loader
+    mnist_test_dataset = MnistDataset(images_dir=images_dir,
+                                      labels_dir=labels_dir,
+                                      image_transform=pre_process)
+    return mnist_test_dataset
+
+
 class MnistDataset(Dataset):
     def __init__(self,
                  images_dir,

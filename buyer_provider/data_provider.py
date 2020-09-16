@@ -69,6 +69,7 @@ class DataProvider:
     # 测试
     @torch.no_grad()
     def test(self, dataloader):
+        """测试并返回精度"""
         self.net.eval()
 
         correct = 0
@@ -89,3 +90,14 @@ class DataProvider:
 
     def load_model(self, model_dir):
         self.update_net_w(np.load(model_dir, allow_pickle=True).item())
+
+    #
+    @torch.no_grad()
+    def get_outputs(self, images_test):
+        """测试并返回所有outputs（类分数）"""
+        self.net.eval()
+
+        outputs = self.net(images_test)
+        return outputs.clone().detach()  # 切断梯度
+
+
