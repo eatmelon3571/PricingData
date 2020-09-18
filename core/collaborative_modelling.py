@@ -36,6 +36,9 @@ def Original():
     num_node = len(tree_list)
     # DB计算特征函数v，发送给第三方
     print('开始计算SV')
+
+    shapleyValue.v_way = 'fedavg'     # 计算v的方式fedavg和score_avg
+
     SVs = shapleyValue.cal_SV_all(tree_list)
 
     for i in range(num_node):
@@ -93,6 +96,9 @@ def ScoreAverage(_tree_list=None):
             tree_list[i].provider.train()
     # 计算SV-------------------
     print('开始计算SV')
+
+    shapleyValue.v_way = 'score_avg'  # 计算v的方式fedavg和score_avg
+
     SVs = shapleyValue.cal_SV_all(tree_list)
 
     print("算得各个SV值：")

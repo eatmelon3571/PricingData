@@ -10,6 +10,8 @@ class ShapleyValue:
         self.SV_all = None  # 保存SV计算结果
         self.v_all = None   # 保存子集的v值
 
+        self.v_way = 'fedavg'   # 计算v的方式
+
 
         self.root_net = None    # 聚合后的根节点
         self.root_p = 0         # 根节点的精确度
@@ -102,10 +104,21 @@ class ShapleyValue:
             temp = int(temp / 2)
 
         # 根据index记录v(S)
-        net, v_S = self.v_score_avg(S)
+
+        net, v_S = self.choose_v(S)
+
         self.v_all[index] = v_S
 
         return net, v_S
+
+    def set_v_choose(self, way):
+        self.v_way = way
+
+    def choose_v(self, S):
+        if self.v_way == 'fedavg':
+            return self.v_fedavg(S)
+        elif self.v_way == 'score_avg':
+            return self.v_score_avg(S)
 
     def v_fedavg(self, S):
         """计算价值v：fedavg聚合后的测试集精确度"""

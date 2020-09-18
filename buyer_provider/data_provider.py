@@ -63,8 +63,7 @@ class DataProvider:
                 if i % 300 == 0:
                     print('current loss : %.5f' % loss.data.item())
                 # '''
-            if loss.data.item() > 100:
-                print('current loss : %.5f' % loss.data.item())
+            print('current loss : %.5f' % loss.data.item())
 
     # 测试
     @torch.no_grad()
