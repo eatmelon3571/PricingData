@@ -33,7 +33,7 @@ if __name__ == '__main__':
     # cifar10 noniid 本地迭代次数要小一点
 
     # 原本的聚合方法：直接所有节点算SV  不用聚合树
-    tree_list = Original()
+    # tree_list = Original()
 
     # 协作建模
     ScoreAverage()
