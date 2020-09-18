@@ -52,7 +52,7 @@ def Original():
     p_root = shapleyValue.root_p
 
     # 写入txt
-    txt_dir = params.dataset_division_testno + '/9.txt'
+    txt_dir = params.dataset_division_testno + '/21.txt'
     write_txt(tree_list, 0, p_root, txt_dir)
     # 第三方解密，发送结果给DP、DB
     return tree_list
@@ -108,6 +108,10 @@ def ScoreAverage(_tree_list=None):
     net, acc = fedavg(positive_list)
 
     print("聚合后精度", acc)
+
+    # 写入txt
+    txt_dir = params.dataset_division_testno + '/22.txt'
+    write_txt(tree_list, 0, net, txt_dir)
 
 
 
