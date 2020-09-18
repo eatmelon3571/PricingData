@@ -9,6 +9,7 @@ from data_pre_cifar10.cifar10_decode import decode_cifar10_data_to_file
 from utils import create_dir
 
 from core.collaborative_modelling import CollaborativeModelling, Original
+from core.collaborative_modelling import ScoreAverage
 
 
 if __name__ == '__main__':
@@ -35,7 +36,7 @@ if __name__ == '__main__':
     tree_list = Original()
 
     # 协作建模
-    CollaborativeModelling(tree_list)
+    ScoreAverage()
 
 
 
