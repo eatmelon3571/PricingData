@@ -70,7 +70,7 @@ K = provider_num                      # K个provider做聚合   只做一次聚�
 
 local_time = 20            # 聚合前本地训练次数
 
-fed_train_time = 0        # 联邦学习训练轮数    mnist iid 10次基本不变了
+fed_train_time = 30        # 联邦学习训练轮数    mnist iid 10次基本不变了
 v_S_fed_train_time = 30     # 聚合时联邦学习训练轮数
 
 excel_dir = dataset_division_testno + '/1.xls'

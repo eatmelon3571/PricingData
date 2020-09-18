@@ -110,6 +110,7 @@ def ScoreAverage(_tree_list=None):
     positive_list = []
     for i in range(params.provider_num):
         if SVs[i] > 0:
+            print(i, "SV>0并加入")
             positive_list.append(tree_list[i])
 
     net, acc = fedavg(positive_list)
