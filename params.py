@@ -65,7 +65,10 @@ round_end = 5              # 从第round_end轮结束
 
 round_cur = round_start    # 训练当前轮数，从start开始到end结束   感觉不应该放这里
 
-K = 4                      # K个provider做聚合
+# K = 4
+K = provider_num                      # K个provider做聚合   只做一次聚合
+
+local_time = 20            # 聚合前本地训练次数
 
 fed_train_time = 0        # 联邦学习训练轮数    mnist iid 10次基本不变了
 v_S_fed_train_time = 30     # 聚合时联邦学习训练轮数

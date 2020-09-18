@@ -58,6 +58,59 @@ def Original():
     return tree_list
 
 
+def ScoreAverage(_tree_list=None):
+    """非树状聚合方式（即一起聚合）    计算SV方式：平均outputs在测试集上精度"""
+    shapleyValue = ShapleyValue()
+    tp = ThirdParty()
+
+    db = DataBuyer(get_net())
+    dps = []
+    for i in range(params.provider_num):
+        net = get_net()
+        dataloader = get_data_loader(i)
+        dps.append(DataProvider(net, dataloader))
+    print('读取模型完成')
+
+    # 随机聚合顺序
+    '''order_rand = random_order(params.provider_num)
+    print('聚合顺序', order_rand)
+    '''
+
+    # 构成树节点 放入tree_list
+    tree_list = []
+
+    if _tree_list is not None:
+        for i in range(params.provider_num):
+            tree_list.append(_tree_list[i])
+    else:
+        for i in range(params.provider_num):
+            tree_list.append(Tree(i, dps[i]))
+    # 先在本地数据集上训练至收敛----------------
+
+    for i in range(params.provider_num):
+        for j in range(params.local_time):
+            tree_list[i].provider.train()
+    # 计算SV-------------------
+    print('开始计算SV')
+    SVs = shapleyValue.cal_SV_all(tree_list)
+
+    print("算得各个SV值：")
+    for i in range(params.provider_num):
+        tree_list[i].sv = SVs[i]
+        print(SVs[i])
+
+    # 找出SV>0的聚合-----------------
+    positive_list = []
+    for i in range(params.provider_num):
+        if SVs[i] > 0:
+            positive_list.append(tree_list[i])
+
+    net, acc = fedavg(positive_list)
+
+    print("聚合后精度", acc)
+
+
+
 def CollaborativeModelling(_tree_list=None):
     """树状聚合方式          +计算SV"""
     shapleyValue = ShapleyValue()
@@ -72,8 +125,9 @@ def CollaborativeModelling(_tree_list=None):
     print('读取模型完成')
 
     # 随机聚合顺序
-    order_rand = random_order(params.provider_num)
+    '''order_rand = random_order(params.provider_num)
     print('聚合顺序', order_rand)
+    '''
 
     # 构成树节点 放入tree_list
     tree_list = []
@@ -163,7 +217,8 @@ def CollaborativeModelling(_tree_list=None):
     # 第三方解密，发送结果给DP、DB
 
 
-'''def write_excel(tree_list, p_fed, p_root):
+'''
+def write_excel(tree_list, p_fed, p_root):
     workbook = xlwt.Workbook(encoding='ascii')
     worksheet = workbook.add_sheet('My Worksheet')
 
@@ -180,7 +235,8 @@ def CollaborativeModelling(_tree_list=None):
     worksheet.write(4, 1, '协作建模下精确度')
     worksheet.write(5, 1, str(p_root))
 
-    workbook.save(params.excel_dir)  # 保存文件'''
+    workbook.save(params.excel_dir)  # 保存文件
+'''
 
 
 def write_txt(tree_list, p_fed, p_root, txt_dir=params.txt_dir):
