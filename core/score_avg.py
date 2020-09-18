@@ -99,6 +99,10 @@ class Server:
     @torch.no_grad()
     def test_with_outputs(self, outputs_test, labels_test):
         """用平均的outputs测试"""
+        # 判断cuda是否可用
+        if torch.cuda.is_available():
+            labels_test = labels_test.cuda()
+
         predicts = torch.max(outputs_test.data, 1)[1]
         correct = (predicts == labels_test).sum()
         total = len(labels_test)

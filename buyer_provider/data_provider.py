@@ -75,6 +75,10 @@ class DataProvider:
         correct = 0
         total = 0
         for i, (images, labels) in enumerate(dataloader):
+            # 判断cuda是否可用
+            if torch.cuda.is_available():
+                images, labels = images.cuda(), labels.cuda()
+
             outputs = self.net(images)
             predicts = torch.max(outputs.data, 1)[
                 1]  # _输出的是最大概率的值，predicts输出的是最大概率值所在位置，max()函数中的1表示维度，意思是计算某一行的最大值
@@ -96,6 +100,10 @@ class DataProvider:
     def get_outputs(self, images_test):
         """测试并返回所有outputs（类分数）"""
         self.net.eval()
+
+        # 判断cuda是否可用
+        if torch.cuda.is_available():
+            images_test = images_test.cuda()
 
         outputs = self.net(images_test)
         return outputs.clone().detach()  # 切断梯度
