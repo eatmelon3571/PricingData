@@ -30,7 +30,7 @@ def Original():
 
 
     # 预训练
-    _, p_fed = fedavg(tree_list)
+    # _, p_fed = fedavg(tree_list)
 
 
     num_node = len(tree_list)
