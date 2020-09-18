@@ -118,7 +118,7 @@ def ScoreAverage(_tree_list=None):
 
     # 写入txt
     txt_dir = params.dataset_division_testno + '/22.txt'
-    write_txt(tree_list, 0, net, txt_dir)
+    write_txt(tree_list, 0, acc, txt_dir)
 
 
 
