@@ -12,16 +12,16 @@ from core.fedavg import fedavg
 from core.shapley_value import ShapleyValue
 
 
-def Original():
+def Original(dps):
     """原本聚合方式：FedAvg   +计算SV"""
     shapleyValue = ShapleyValue()
 
     db = DataBuyer(get_net())
-    dps = []
+    '''dps = []
     for i in range(params.provider_num):
         net = get_net()
         dataloader = get_data_loader(i)
-        dps.append(DataProvider(net, dataloader))
+        dps.append(DataProvider(net, dataloader))'''
 
     # 构成树节点 放入tree_list
     tree_list = []
@@ -61,18 +61,18 @@ def Original():
     return tree_list
 
 
-def ScoreAverage(_tree_list=None):
+def ScoreAverage(dps):
     """非树状聚合方式（即一起聚合）    计算SV方式：平均outputs在测试集上精度"""
     shapleyValue = ShapleyValue()
     tp = ThirdParty()
 
     db = DataBuyer(get_net())
-    dps = []
+    '''dps = []
     for i in range(params.provider_num):
         net = get_net()
         dataloader = get_data_loader(i)
         dps.append(DataProvider(net, dataloader))
-    print('读取模型完成')
+    print('读取模型完成')'''
 
     # 随机聚合顺序
     '''order_rand = random_order(params.provider_num)
@@ -82,12 +82,8 @@ def ScoreAverage(_tree_list=None):
     # 构成树节点 放入tree_list
     tree_list = []
 
-    if _tree_list is not None:
-        for i in range(params.provider_num):
-            tree_list.append(_tree_list[i])
-    else:
-        for i in range(params.provider_num):
-            tree_list.append(Tree(i, dps[i]))
+    for i in range(params.provider_num):
+        tree_list.append(Tree(i, dps[i]))
     # 先在本地数据集上训练至收敛----------------
 
     for i in range(params.provider_num):
