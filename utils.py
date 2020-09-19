@@ -106,4 +106,5 @@ def save_provider_model(provider_no, net):
     # 根据 当前的轮数 命名 模型文件
     provider_i_model_dir = provider_i_dir + '/model.npy'
     print('save', provider_i_model_dir)
+    print('save', net)
     np.save(provider_i_model_dir, net.get_w())
