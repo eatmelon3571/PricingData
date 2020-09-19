@@ -89,7 +89,7 @@ def load_provider_model(provider_no):
     # if params.round_start > 0:  # 不为0说明不是第一次，有存储的模型，就加载一下
     provider_i_dir = params.dataset_division_testno + '/provider' + str(provider_no)
     # 根据 当前的轮数 命名 模型文件
-    provider_i_model_dir = provider_i_dir + '/model_' + str(params.round_cur) + '.npy'
+    provider_i_model_dir = provider_i_dir + '/model.npy'
     net.load_state_dict(np.load(provider_i_model_dir))
     # 判断cuda是否可用
     if torch.cuda.is_available():
@@ -102,5 +102,5 @@ def save_provider_model(provider_no, net):
     """保存编号 provider_no 的 模型"""
     provider_i_dir = params.dataset_division_testno + '/provider' + str(provider_no)
     # 根据 当前的轮数 命名 模型文件
-    provider_i_model_dir = provider_i_dir + '/model_' + str(params.round_cur) + '.npy'
+    provider_i_model_dir = provider_i_dir + '/model.npy'
     np.save(provider_i_model_dir, net.get_w())
