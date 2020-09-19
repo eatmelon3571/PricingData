@@ -18,15 +18,14 @@ class NetCIFAR10(nn.Module):
         self.fc3 = nn.Linear(192, 10)
 
         nn.init.constant_(self.conv1.weight, 1)
-        print(self.conv1.weight)
         nn.init.constant_(self.conv1.bias, 0)
-        nn.init.constant_(self.conv2.weight, 1)
+        nn.init.constant_(self.conv2.weight, 0.5)
         nn.init.constant_(self.conv2.bias, 0)
-        nn.init.constant_(self.fc1.weight, 1)
+        nn.init.constant_(self.fc1.weight, 0.5)
         nn.init.constant_(self.fc1.bias, 0)
-        nn.init.constant_(self.fc2.weight, 1)
+        nn.init.constant_(self.fc2.weight, 0.5)
         nn.init.constant_(self.fc2.bias, 0)
-        nn.init.constant_(self.fc3.weight, 1)
+        nn.init.constant_(self.fc3.weight, 0.5)
         nn.init.constant_(self.fc3.bias, 0)
 
     def forward(self, x):

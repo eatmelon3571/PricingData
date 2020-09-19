@@ -32,8 +32,14 @@ if __name__ == '__main__':
 
     # cifar10 noniid 本地迭代次数要小一点
 
+    # 先把一个网络初值存下来，然后每次都加载这个
+
+    # 或者运行前将模型存下来
+
     # 原本的聚合方法：直接所有节点算SV  不用聚合树
     tree_list = Original()
+
+
 
     # 协作建模
     ScoreAverage()
