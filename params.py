@@ -8,7 +8,7 @@ root_dir = './data'
 'mnist'
 'cifar10'
 '''
-dataset = 'cifar10'
+dataset = 'mnist'
 
 
 

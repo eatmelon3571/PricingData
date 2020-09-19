@@ -54,10 +54,12 @@ if __name__ == '__main__':
     dps = load_model()
 
     # 原本的聚合方法：直接所有节点算SV  不用聚合树
+    # txt_name = '25.txt'
     tree_list = Original(dps)
 
     dps = load_model()
     # 协作建模
+    # txt_name = '26.txt'
     ScoreAverage(dps)
 
 
