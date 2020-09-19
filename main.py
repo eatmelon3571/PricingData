@@ -23,7 +23,6 @@ def load_model():
     dps = []
     for i in range(params.provider_num):
         net = load_provider_model(i)
-        print(i, net.conv1.weight[0][0])
         dataloader = get_data_loader(i)
         dps.append(DataProvider(net, dataloader))
     return dps
