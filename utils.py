@@ -91,8 +91,7 @@ def load_provider_model(provider_no):
     # 根据 当前的轮数 命名 模型文件
     provider_i_model_dir = provider_i_dir + '/model.npy'
     print('load', provider_i_model_dir)
-    net.load_state_dict(np.load(provider_i_model_dir))
-    print(net)
+    net.load_state_dict(np.load(provider_i_model_dir, allow_pickle=True).item())
     # 判断cuda是否可用
     if torch.cuda.is_available():
         # print('cuda可用')
