@@ -92,6 +92,7 @@ def load_provider_model(provider_no):
     provider_i_model_dir = provider_i_dir + '/model.npy'
     print('load', provider_i_model_dir)
     net.load_state_dict(np.load(provider_i_model_dir))
+    print(net)
     # 判断cuda是否可用
     if torch.cuda.is_available():
         # print('cuda可用')
