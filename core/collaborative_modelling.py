@@ -90,10 +90,10 @@ def ScoreAverage(_tree_list=None):
             tree_list.append(Tree(i, dps[i]))
     # 先在本地数据集上训练至收敛----------------
 
-    '''for i in range(params.provider_num):
+    for i in range(params.provider_num):
         print("客户端", i, "预训练")
         for j in range(params.local_time):
-            tree_list[i].provider.train()'''
+            tree_list[i].provider.train()
     # 计算SV-------------------
     print('开始计算SV')
 
@@ -113,7 +113,7 @@ def ScoreAverage(_tree_list=None):
             print(i, "SV>0并加入")
             positive_list.append(tree_list[i])
 
-    net, acc = fedavg(positive_list, 1000)
+    net, acc = fedavg(positive_list, 100)
 
     print("聚合后精度", acc)
 
