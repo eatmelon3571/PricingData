@@ -113,7 +113,7 @@ def ScoreAverage(_tree_list=None):
             print(i, "SV>0并加入")
             positive_list.append(tree_list[i])
 
-    net, acc = fedavg(positive_list)
+    net, acc = fedavg(positive_list, 50)
 
     print("聚合后精度", acc)
 
