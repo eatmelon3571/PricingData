@@ -58,10 +58,12 @@ if __name__ == '__main__':
     # txt_name = '25.txt'
     # tree_list = Original(dps)
 
+    print(222222)
+
     dps = load_model()
     # 协作建模
     # txt_name = '26.txt'
-    ScoreAverage(dps)
+    # ScoreAverage(dps)
 
 
 
