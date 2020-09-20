@@ -50,7 +50,7 @@ if __name__ == '__main__':
     # cifar10 noniid 本地迭代次数要小一点
 
     # 先把一个网络初值存下来，然后每次都加载这个
-    # creat_model()
+    creat_model()
 
     dps = load_model()
 
