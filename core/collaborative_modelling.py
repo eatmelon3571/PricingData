@@ -63,6 +63,7 @@ def Original(dps):
     write_txt(tree_list, 0, p_root, txt_dir)
     # 把v_all写入txt
     v_all = shapleyValue.v_all
+    print(v_all)
     npy_dir = params.dataset_division_testno + '/Original_v_all.npy'
     write_npy_v_all(v_all, npy_dir)
     # 第三方解密，发送结果给DP、DB
@@ -126,6 +127,7 @@ def ScoreAverage(dps):
     write_txt(tree_list, 0, acc, txt_dir)
     # 把v_all写入txt
     v_all = shapleyValue.v_all
+    print(v_all)
     npy_dir = params.dataset_division_testno + '/ScoreAverage_v_all.npy'
     write_npy_v_all(v_all, npy_dir)
 
