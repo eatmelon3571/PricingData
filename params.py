@@ -8,7 +8,7 @@ root_dir = './data'
 'mnist'
 'cifar10'
 '''
-dataset = 'cifar10'
+dataset = 'mnist'
 
 
 
@@ -29,7 +29,7 @@ data_per_provider_num = 2000
 'noniid'
 'partialnoniid'
 '''
-division = 'partialnoniid'
+division = 'iid'
 
 dataset_division = dataset_dir + '/' + division
 test_no = 0                                  # 实验编号
@@ -77,6 +77,10 @@ excel_dir = dataset_division_testno + '/1.xls'
 
 txt_dir = dataset_division_testno + '/11.txt'
 
+
+npy_original_v_all = dataset_division_testno + '/Original_v_all.npy'
+npy_ScoreAverage_v_all = dataset_division_testno + '/ScoreAverage_v_all.npy'
+
 # 记录pa pb pab的值
 txt_dir_papb = dataset_division_testno + '/papb.txt'
 # 记录   pab聚合-pab估计
@@ -98,4 +102,10 @@ def change_param(dataset_temp='mnist',
     dataset_division_testno = dataset_division + '/test' + str(test_no)  # 本次实验目录
     dataset_division_testno_save = dataset_division_testno + '/save'  # 存储目录
 
+    excel_dir = dataset_division_testno + '/1.xls'
 
+    txt_dir = dataset_division_testno + '/11.txt'
+
+
+    npy_original_v_all = dataset_division_testno + '/Original_v_all.npy'
+    npy_ScoreAverage_v_all = dataset_division_testno + '/ScoreAverage_v_all.npy'
