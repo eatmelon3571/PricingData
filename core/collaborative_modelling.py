@@ -63,8 +63,8 @@ def Original(dps):
     write_txt(tree_list, 0, p_root, txt_dir)
     # 把v_all写入txt
     v_all = shapleyValue.v_all
-    txt_dir = params.dataset_division_testno + '/Original_v_all.txt'
-    write_txt_v_all(v_all, txt_dir)
+    npy_dir = params.dataset_division_testno + '/Original_v_all.npy'
+    write_npy_v_all(v_all, npy_dir)
     # 第三方解密，发送结果给DP、DB
     return tree_list
 
@@ -94,10 +94,10 @@ def ScoreAverage(dps):
         tree_list.append(Tree(i, dps[i]))
     # 先在本地数据集上训练至收敛----------------
 
-    for i in range(params.provider_num):
+    '''for i in range(params.provider_num):
         print("客户端", i, "预训练")
         for j in range(params.local_time):
-            tree_list[i].provider.train()
+            tree_list[i].provider.train()'''
     # 计算SV-------------------
     print('开始计算SV')
 
@@ -126,8 +126,8 @@ def ScoreAverage(dps):
     write_txt(tree_list, 0, acc, txt_dir)
     # 把v_all写入txt
     v_all = shapleyValue.v_all
-    txt_dir = params.dataset_division_testno + '/ScoreAverage_v_all.txt'
-    write_txt_v_all(v_all, txt_dir)
+    npy_dir = params.dataset_division_testno + '/ScoreAverage_v_all.npy'
+    write_npy_v_all(v_all, npy_dir)
 
 
 def CollaborativeModelling(_tree_list=None):
@@ -273,8 +273,8 @@ def write_txt(tree_list, p_fed, p_root, txt_dir=params.txt_dir):
         f.write(str(p_root) + "\n")
 
 
-def write_txt_v_all(v_all, txt_dir):
-    np.save(txt_dir, v_all)
+def write_npy_v_all(v_all, npy_dir):
+    np.save(npy_dir, v_all)
 
 
 def all_B(root):
