@@ -1,5 +1,6 @@
 import random
 # import xlwt
+import numpy as np
 import torch
 
 import params
@@ -41,6 +42,9 @@ def Original(dps):
 
     SVs = shapleyValue.cal_SV_all(tree_list)
 
+    # 所有聚合后pab
+    v_all = shapleyValue.v_all
+
     for i in range(num_node):
         tree_list[i].sv = SVs[i]
         print(SVs[i])
@@ -54,9 +58,13 @@ def Original(dps):
     # 根节点精确度
     p_root = shapleyValue.root_p
 
-    # 写入txt
+    # SV写入txt
     txt_dir = params.dataset_division_testno + '/21.txt'
     write_txt(tree_list, 0, p_root, txt_dir)
+    # 把v_all写入txt
+    v_all = shapleyValue.v_all
+    txt_dir = params.dataset_division_testno + '/Original_v_all.txt'
+    write_txt_v_all(v_all, txt_dir)
     # 第三方解密，发送结果给DP、DB
     return tree_list
 
@@ -116,7 +124,10 @@ def ScoreAverage(dps):
     # 写入txt
     txt_dir = params.dataset_division_testno + '/22.txt'
     write_txt(tree_list, 0, acc, txt_dir)
-
+    # 把v_all写入txt
+    v_all = shapleyValue.v_all
+    txt_dir = params.dataset_division_testno + '/ScoreAverage_v_all.txt'
+    write_txt_v_all(v_all, txt_dir)
 
 
 def CollaborativeModelling(_tree_list=None):
@@ -260,6 +271,10 @@ def write_txt(tree_list, p_fed, p_root, txt_dir=params.txt_dir):
         f.write(str(p_fed) + "\n")
         f.write('协作建模下精确度\n')
         f.write(str(p_root) + "\n")
+
+
+def write_txt_v_all(v_all, txt_dir):
+    np.save(txt_dir, v_all)
 
 
 def all_B(root):

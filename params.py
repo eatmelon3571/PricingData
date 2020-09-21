@@ -29,7 +29,7 @@ data_per_provider_num = 2000
 'noniid'
 'partialnoniid'
 '''
-division = 'iid'
+division = 'partialnoniid'
 
 dataset_division = dataset_dir + '/' + division
 test_no = 0                                  # 实验编号
@@ -77,8 +77,10 @@ excel_dir = dataset_division_testno + '/1.xls'
 
 txt_dir = dataset_division_testno + '/11.txt'
 
-
-
+# 记录pa pb pab的值
+txt_dir_papb = dataset_division_testno + '/papb.txt'
+# 记录   pab聚合-pab估计
+txt_dir_pab_reduce = dataset_division_testno + '/pab_reduce.txt'
 
 
 def change_param(dataset_temp='mnist',
