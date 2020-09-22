@@ -279,6 +279,15 @@ def write_npy_v_all(v_all, npy_dir):
     np.save(npy_dir, v_all)
 
 
+def show_pa_pb_pab():
+    npy1 = params.npy_original_v_all
+    npy2 = params.npy_ScoreAverage_v_all
+    arr1 = np.load(npy1)
+    arr2 = np.load(npy2)
+
+    print(arr2[1], arr2[2], arr1[3])
+
+
 def all_B(root):
     """给子节点分配B"""
     l = len(root.children)

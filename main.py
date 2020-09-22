@@ -11,7 +11,7 @@ from utils import get_data_loader
 from buyer_provider.data_provider import DataProvider
 
 from core.collaborative_modelling import CollaborativeModelling, Original
-from core.collaborative_modelling import ScoreAverage
+from core.collaborative_modelling import ScoreAverage, show_pa_pb_pab
 
 
 def creat_model():
@@ -52,16 +52,18 @@ if __name__ == '__main__':
     # 先把一个网络初值存下来，然后每次都加载这个
     # creat_model()
 
-    dps = load_model()
+    # dps = load_model()
 
     # 原本的聚合方法：直接所有节点算SV  不用聚合树
     # txt_name = '25.txt'
-    tree_list = Original(dps)
+    # tree_list = Original(dps)
 
-    dps = load_model()
+    # dps = load_model()
     # 协作建模
     # txt_name = '26.txt'
-    ScoreAverage(dps)
+    # ScoreAverage(dps)
+
+    show_pa_pb_pab()
 
 
 
