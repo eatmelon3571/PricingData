@@ -85,9 +85,6 @@ class MnistDataset(Dataset):
         self.images = torch.tensor(self.images, dtype=torch.float32)
         self.labels = self.labels.long()
 
-
-        print(self.labels.shape)
-
     def __getitem__(self, index):
         image = self.images[index]
         label = self.labels[index]

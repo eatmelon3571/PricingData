@@ -12,6 +12,7 @@ from buyer_provider.data_provider import DataProvider
 
 from core.collaborative_modelling import CollaborativeModelling, Original
 from core.collaborative_modelling import ScoreAverage, show_pa_pb_pab
+from core.score_avg import show_papbpab
 
 
 def creat_model():
@@ -63,7 +64,9 @@ if __name__ == '__main__':
     # txt_name = '26.txt'
     # ScoreAverage(dps)
 
-    show_pa_pb_pab()
+    # show_pa_pb_pab()
+
+    show_papbpab()
 
 
 

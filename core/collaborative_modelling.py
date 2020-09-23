@@ -35,7 +35,14 @@ def Original(dps):
 
 
     num_node = len(tree_list)
-    # DB计算特征函数v，发送给第三方
+
+    # 先在本地数据集上训练至收敛----------------
+
+    '''for i in range(params.provider_num):
+        print("客户端", i, "预训练")
+        for j in range(params.local_time):
+            tree_list[i].provider.train()'''
+    #
     print('开始计算SV')
 
     shapleyValue.v_way = 'fedavg'     # 计算v的方式fedavg和score_avg
@@ -64,7 +71,7 @@ def Original(dps):
     # 把v_all写入txt
     v_all = shapleyValue.v_all
     print(v_all)
-    npy_dir = params.dataset_division_testno + '/Original_v_all.npy'
+    npy_dir = params.dataset_division_testno + '/Original_v_all_2.npy'
     write_npy_v_all(v_all, npy_dir)
     # 第三方解密，发送结果给DP、DB
     return tree_list
@@ -128,7 +135,7 @@ def ScoreAverage(dps):
     # 把v_all写入txt
     v_all = shapleyValue.v_all
     print(v_all)
-    npy_dir = params.dataset_division_testno + '/ScoreAverage_v_all.npy'
+    npy_dir = params.dataset_division_testno + '/ScoreAverage_v_all_2.npy'
     write_npy_v_all(v_all, npy_dir)
 
 
@@ -284,6 +291,8 @@ def show_pa_pb_pab():
     npy2 = params.npy_ScoreAverage_v_all
     arr1 = np.load(npy1)
     arr2 = np.load(npy2)
+
+    n = params.provider_num
 
     print(arr2[1], arr2[2], arr1[3])
 

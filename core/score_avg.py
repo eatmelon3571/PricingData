@@ -25,20 +25,48 @@ def score_avg(node_K_list):
     num_client = len(clients)
     print('客户端数量', num_client)
 
+    outputs_list = []     # 用于记录outputs
 
     # 客户端测试获得类分数,传给服务器
     for j in range(num_client):
         outputs_temp = clients[j].get_outputs(images_test)
+        # 记录outputs---------------------------------------
+        outputs_list.append(outputs_temp)
+        # 传给服务器
         server.add_outputs(outputs_temp)
+
+
+    # 保存papb
+    outputs_papb_dir = params.dataset_division_testno + '/papb.npy'
+    save_outputs(outputs_list, outputs_papb_dir)
 
     # 服务器做平均
     print('服务器平均')
     outputs_test = server.avg_outputs()
 
+    # 保存pab
+    outputs_pab_dir = params.dataset_division_testno + '/pab.npy'
+    save_outputs(outputs_test, outputs_pab_dir)
+
     test_acc = server.test_with_outputs(outputs_test, labels_test)
 
     # 返回测试精度 作为v
     return server.net, test_acc
+
+
+def save_outputs(outputs_list, outputs_dir):
+    np.save(outputs_dir, outputs_list)
+
+
+def show_papbpab():
+    outputs_papb_dir = params.dataset_division_testno + '/papb.npy'
+    papb = np.load(outputs_papb_dir)
+
+    outputs_pab_dir = params.dataset_division_testno + '/pab.npy'
+    pab = np.load(outputs_pab_dir)
+
+    print('papb', papb[0].shape)
+    print('pab', pab.shape)
 
 
 def add_tree_to_list(root, clients):
