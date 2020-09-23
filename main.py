@@ -40,28 +40,28 @@ if __name__ == '__main__':
         # 解码数据集
         # decode_mnist_data_to_file()
         # 分配数据集
-        # mnist_allocation()
+        mnist_allocation()
         _ = 0
     elif params.dataset == 'cifar10':
         # decode_cifar10_data_to_file()
-        # cifar10_allocation()
+        cifar10_allocation()
         _ = 0
     # '''
 
     # cifar10 noniid 本地迭代次数要小一点
 
     # 先把一个网络初值存下来，然后每次都加载这个
-    creat_model()
+    # creat_model()
 
-    dps = load_model()
+
 
     # 原本的聚合方法：直接所有节点算SV  不用聚合树
-    # txt_name = '25.txt'
-    tree_list = Original(dps)
-
     dps = load_model()
+    Original(dps)
+
+
     # 协作建模
-    # txt_name = '26.txt'
+    dps = load_model()
     ScoreAverage(dps)
 
     # show_pa_pb_pab()

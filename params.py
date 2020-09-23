@@ -29,7 +29,7 @@ data_per_provider_num = 2000
 'noniid'
 'partialnoniid'
 '''
-division = 'partialnoniid'
+division = 'iid'
 
 dataset_division = dataset_dir + '/' + division
 test_no = 0                                  # 实验编号
@@ -85,6 +85,11 @@ npy_ScoreAverage_v_all = dataset_division_testno + '/ScoreAverage_v_all.npy'
 txt_dir_papb = dataset_division_testno + '/papb.txt'
 # 记录   pab聚合-pab估计
 txt_dir_pab_reduce = dataset_division_testno + '/pab_reduce.txt'
+
+
+flag2 = True
+
+no_papa_pab = 0
 
 
 def change_param(dataset_temp='mnist',

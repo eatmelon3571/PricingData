@@ -6,8 +6,6 @@ from utils import get_net, get_test_dataloader, get_test_dataset
 
 
 
-
-
 def score_avg(node_K_list):
     """计算价值v：平均类分数（测试集）后的，测试集精确度"""
 
@@ -35,45 +33,52 @@ def score_avg(node_K_list):
     for j in range(num_client):
         outputs_temp = clients[j].get_outputs(images_test)
         # 记录outputs---------------------------------------
-        if flag:
-            outputs_list = outputs_temp
-        else:
-            outputs_list = torch.cat((outputs_list, outputs_temp), 0)
+        if params.flag2:
+            if flag:
+                outputs_list = outputs_temp
+                flag = False
+            else:
+                outputs_list = torch.cat((outputs_list, outputs_temp), 0)
+            print('outputs_list.shape', outputs_list.shape)
         # 传给服务器
         server.add_outputs(outputs_temp)
 
-
     # 保存papb
-    outputs_papb_dir = params.dataset_division_testno + '/papb.npy'
+    outputs_papb_dir = params.dataset_division_testno + '/papb' + str(params.no_papa_pab) + '.npy'
     save_outputs(outputs_list, outputs_papb_dir)
 
     # 服务器做平均
     print('服务器平均')
-    outputs_test = server.avg_outputs()
+    outputs_avg = server.avg_outputs()
 
     # 保存pab
-    outputs_pab_dir = params.dataset_division_testno + '/pab.npy'
-    save_outputs(outputs_test, outputs_pab_dir)
+    outputs_pab_dir = params.dataset_division_testno + '/pab' + str(params.no_papa_pab) + '.npy'
+    save_outputs(outputs_avg, outputs_pab_dir)
 
-    test_acc = server.test_with_outputs(outputs_test, labels_test)
+    test_acc = server.test_with_outputs(outputs_avg, labels_test)
 
     # 返回测试精度 作为v
     return server.net, test_acc
 
 
 def save_outputs(outputs_list, outputs_dir):
-    torch.save(outputs_dir, outputs_list)
+    torch.save(outputs_list, outputs_dir)
 
 
 def show_papbpab():
-    outputs_papb_dir = params.dataset_division_testno + '/papb.npy'
+    outputs_papb_dir = params.dataset_division_testno + '/papb63.npy'
     papb = torch.load(outputs_papb_dir)
 
-    outputs_pab_dir = params.dataset_division_testno + '/pab.npy'
+    outputs_pab_dir = params.dataset_division_testno + '/pab63.npy'
     pab = torch.load(outputs_pab_dir)
 
-    print('papb', papb[0].shape)
-    print('pab', pab.shape)
+    sum = 0
+    for i in range(6):
+        print('papb', papb[i * 10000])
+        sum += papb[i * 10000]
+    print('sum', sum)
+    print(sum / 6)
+    print('pab', pab[0])
 
 
 def add_tree_to_list(root, clients):
@@ -127,8 +132,8 @@ class Server:
         """
         # 做平均
         outputs = torch.div(self.clients_outputs, self.client_num)
-        # 清空计算的    以便下一次计算
         self.clear_outputs()
+        # 清空计算的    以便下一次计算
         return outputs
 
     @torch.no_grad()
@@ -139,6 +144,9 @@ class Server:
             labels_test = labels_test.cuda()
 
         predicts = torch.max(outputs_test.data, 1)[1]
+
+        print('torch.max(outputs_test.data, 1)', len(torch.max(outputs_test.data, 1)))
+
         correct = (predicts == labels_test).sum()
         total = len(labels_test)
         print('total', total, 'correct', correct)

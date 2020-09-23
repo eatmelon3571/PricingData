@@ -63,8 +63,8 @@ class ShapleyValue:
         # 遍历所有子集
         while j != 0:
             #   j的二进制的每一位，1代表选，0代表不选
-            print('当前子集')    # #
-            self.print_bin(j, num_M)    # #
+            # print('当前子集')    # #
+            # self.print_bin(j, num_M)    # #
             # 计算v(S∪{i})-v(S)
             # print('j , trans_i', j, trans_i)
             derta = self.v_all[j + trans_i] - self.v_all[j]
@@ -104,6 +104,9 @@ class ShapleyValue:
             temp = int(temp / 2)
 
         # 根据index记录v(S)
+
+        params.no_papa_pab = index
+        print('index', index)
 
         net, v_S = self.choose_v(S)
 
