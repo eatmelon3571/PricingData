@@ -38,19 +38,20 @@ if __name__ == '__main__':
     # params.test_no = 0     # 实验编号0
     if params.dataset == 'mnist':
         # 解码数据集
-        decode_mnist_data_to_file()
+        # decode_mnist_data_to_file()
         # 分配数据集
-        mnist_allocation()
+        # mnist_allocation()
+        _ = 0
     elif params.dataset == 'cifar10':
         # decode_cifar10_data_to_file()
         # cifar10_allocation()
-        a = 0
+        _ = 0
     # '''
 
     # cifar10 noniid 本地迭代次数要小一点
 
     # 先把一个网络初值存下来，然后每次都加载这个
-    # creat_model()
+    creat_model()
 
     dps = load_model()
 
