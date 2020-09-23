@@ -55,15 +55,15 @@ def score_avg(node_K_list):
 
 
 def save_outputs(outputs_list, outputs_dir):
-    np.save(outputs_dir, outputs_list)
+    torch.save(outputs_dir, outputs_list)
 
 
 def show_papbpab():
     outputs_papb_dir = params.dataset_division_testno + '/papb.npy'
-    papb = np.load(outputs_papb_dir)
+    papb = torch.load(outputs_papb_dir)
 
     outputs_pab_dir = params.dataset_division_testno + '/pab.npy'
-    pab = np.load(outputs_pab_dir)
+    pab = torch.load(outputs_pab_dir)
 
     print('papb', papb[0].shape)
     print('pab', pab.shape)
