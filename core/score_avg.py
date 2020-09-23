@@ -5,6 +5,9 @@ import params
 from utils import get_net, get_test_dataloader, get_test_dataset
 
 
+
+
+
 def score_avg(node_K_list):
     """计算价值v：平均类分数（测试集）后的，测试集精确度"""
 
@@ -25,13 +28,17 @@ def score_avg(node_K_list):
     num_client = len(clients)
     print('客户端数量', num_client)
 
-    outputs_list = []     # 用于记录outputs
+    outputs_list = None     # 用于记录outputs
+    flag = True
 
     # 客户端测试获得类分数,传给服务器
     for j in range(num_client):
         outputs_temp = clients[j].get_outputs(images_test)
         # 记录outputs---------------------------------------
-        outputs_list.append(outputs_temp)
+        if flag:
+            outputs_list = outputs_temp
+        else:
+            outputs_list = torch.cat((outputs_list, outputs_temp), 0)
         # 传给服务器
         server.add_outputs(outputs_temp)
 
