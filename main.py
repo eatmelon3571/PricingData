@@ -38,7 +38,7 @@ if __name__ == '__main__':
     # params.test_no = 0     # 实验编号0
     if params.dataset == 'mnist':
         # 解码数据集
-        # decode_mnist_data_to_file()
+        decode_mnist_data_to_file()
         # 分配数据集
         mnist_allocation()
     elif params.dataset == 'cifar10':
