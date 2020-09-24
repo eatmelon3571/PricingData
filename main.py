@@ -40,11 +40,11 @@ if __name__ == '__main__':
         # 解码数据集
         # decode_mnist_data_to_file()
         # 分配数据集
-        mnist_allocation()
+        # mnist_allocation()
         _ = 0
     elif params.dataset == 'cifar10':
         # decode_cifar10_data_to_file()
-        cifar10_allocation()
+        # cifar10_allocation()
         _ = 0
     # '''
 

@@ -46,10 +46,19 @@ def fedavg(node_K_list, fed_train_time=params.fed_train_time):
             clients[j].update_net_w(ser_w)
             # clients[j].lr = ser_lr
 
-        test_acc = server.test(test_dataloader)
+        test_acc, outputs = server.test(test_dataloader)
+
+
+        # 保存pab
+        outputs_pab_dir = params.dataset_division_testno + '/fed_pab' + str(params.no_papa_pab) + '.npy'
+        save_outputs(outputs, outputs_pab_dir)
 
     # 返回测试精度 作为v
     return server.net, test_acc
+
+
+def save_outputs(outputs_list, outputs_dir):
+    torch.save(outputs_list, outputs_dir)
 
 
 def add_tree_to_list(root, clients):
@@ -119,6 +128,7 @@ class Server:
         correct = 0
         test_loss = 0
         total = 0
+        outputs = None
         for i, (images, labels) in enumerate(dataloader):
             if torch.cuda.is_available():
                 images, labels = images.cuda(), labels.cuda()
@@ -134,4 +144,4 @@ class Server:
         p = 1.0 * correct / total
         print('Accuracy: %.4f' % p)
 
-        return p
+        return p, outputs
