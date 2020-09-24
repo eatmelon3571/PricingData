@@ -1,4 +1,5 @@
 """Main script for PricingData."""
+import torch
 
 import params
 from data_pre_mnist.mnist_decode import decode_mnist_data_to_file
@@ -29,6 +30,26 @@ def load_model():
     return dps
 
 
+def show():
+    outputs_papb_dir = params.dataset_division_testno + '/papb63.npy'
+    papb = torch.load(outputs_papb_dir)
+
+    outputs_pab_dir = params.dataset_division_testno + '/pab63.npy'
+    pab = torch.load(outputs_pab_dir)
+
+    outputs_fed_pab_dir = params.dataset_division_testno + '/fed_pab63.npy'
+    fed_pab = torch.load(outputs_fed_pab_dir)
+
+    sum = 0
+    for i in range(6):
+        print('papb', papb[i * 10000])
+        sum += papb[i * 10000]
+    print('sum', sum)
+    print(sum / 6)
+    print('pab', pab[0])
+    print('fed_pab', fed_pab[0])
+
+
 if __name__ == '__main__':
     # 创建所需文件夹
     create_dir()
@@ -56,17 +77,17 @@ if __name__ == '__main__':
 
 
     # 原本的聚合方法：直接所有节点算SV  不用聚合树
-    dps = load_model()
-    Original(dps)
+    # dps = load_model()
+    # Original(dps)
 
 
     # 协作建模
-    dps = load_model()
-    ScoreAverage(dps)
+    # dps = load_model()
+    # ScoreAverage(dps)
 
     # show_pa_pb_pab()
 
-    show_papbpab()
+    show()
 
 
 
