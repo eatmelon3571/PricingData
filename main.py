@@ -41,7 +41,8 @@ def show():
     fed_pab = torch.load(outputs_fed_pab_dir)
 
     sum = 0
-    for i in range(6):
+    l = int(len(papb) / 10000)
+    for i in range(l):
         print('papb', papb[i * 10000])
         sum += papb[i * 10000]
     print('sum', sum)
