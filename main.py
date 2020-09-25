@@ -31,13 +31,13 @@ def load_model():
 
 
 def show():
-    outputs_papb_dir = params.dataset_division_testno + '/papb63.npy'
+    outputs_papb_dir = params.dataset_division_testno + '/papb3.npy'
     papb = torch.load(outputs_papb_dir)
 
-    outputs_pab_dir = params.dataset_division_testno + '/pab63.npy'
+    outputs_pab_dir = params.dataset_division_testno + '/pab3.npy'
     pab = torch.load(outputs_pab_dir)
 
-    outputs_fed_pab_dir = params.dataset_division_testno + '/fed_pab63.npy'
+    outputs_fed_pab_dir = params.dataset_division_testno + '/fed_pab3.npy'
     fed_pab = torch.load(outputs_fed_pab_dir)
 
     sum = 0
