@@ -46,7 +46,7 @@ def show():
         print('papb', papb[i * 10000])
         sum += papb[i * 10000]
     print('sum', sum)
-    print(sum / 6)
+    print(sum / l)
     print('pab', pab[0])
     print('fed_pab', fed_pab[0])
 
