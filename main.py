@@ -62,7 +62,7 @@ def show():
 
 
 def write_txt(data, txt_dir):
-    with open(txt_dir, "w+") as f:  # 追加写
+    with open(txt_dir, "a") as f:  # 追加写
         f.write("id        sv        B\n")
         for i in range(len(data)):
             f.write(str(data[i].item()) + " ")
