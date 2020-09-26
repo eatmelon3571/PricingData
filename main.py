@@ -31,14 +31,16 @@ def load_model():
         dps.append(DataProvider(net, dataloader))
     return dps
 
+
 def show():
-    outputs_papb_dir = params.dataset_division_testno + '/papb7.npy'
+    i = 7
+    outputs_papb_dir = params.dataset_division_testno + '/papb' + str(i) + '_softmax.npy'
     papb = torch.load(outputs_papb_dir)
 
-    outputs_pab_dir = params.dataset_division_testno + '/pab7.npy'
+    outputs_pab_dir = params.dataset_division_testno + '/pab' + str(i) + '_softmax.npy'
     pab = torch.load(outputs_pab_dir)
 
-    outputs_fed_pab_dir = params.dataset_division_testno + '/fed_pab7.npy'
+    outputs_fed_pab_dir = params.dataset_division_testno + '/fed_pab' + str(i) + '_softmax.npy'
     fed_pab = torch.load(outputs_fed_pab_dir)
 
     sum = 0
@@ -90,10 +92,10 @@ if __name__ == '__main__':
     # dps = load_model()
     # ScoreAverage(dps)
 
-    # show()
+    show()
 
 
-    all_softmax()
+    # all_softmax()
 
 
 
