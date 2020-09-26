@@ -4,6 +4,7 @@ import torch.optim as optim
 from torch.autograd import Variable
 import numpy as np
 import params
+from buyer_provider.data_provider import DataProvider
 from module.net_mnist import NetMNIST, NetCNN
 from module.net_cifar import NetCIFAR10
 from datasets.mnist import get_provider_mnist, get_test_mnist, get_test_dataset_mnist
@@ -104,3 +105,28 @@ def save_provider_model(provider_no, net):
     # 根据 当前的轮数 命名 模型文件
     provider_i_model_dir = provider_i_dir + '/model.npy'
     np.save(provider_i_model_dir, net.get_w())
+
+
+# 用于保证初始化模型一致
+def creat_model():
+    for i in range(params.provider_num):
+        save_provider_model(i, get_net())
+
+
+# 用于保证初始化模型一致
+def load_model():
+    dps = []
+    for i in range(params.provider_num):
+        net = load_provider_model(i)
+        dataloader = get_data_loader(i)
+        dps.append(DataProvider(net, dataloader))
+    return dps
+
+
+# 对存储的outputs进行softmax
+def softmax(in_dir, out_dir):
+    outputs = torch.load(in_dir)
+    print('outputs.data.shape', outputs.data.shape)
+    temp = torch.max(outputs.data, 1)[0]
+    print('temp.shape', temp.shape)
+    torch.save(temp, out_dir)
