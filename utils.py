@@ -149,5 +149,5 @@ def cal_avg():
         print('avg', sum / l)
         print('pab', pab[0])
 
-        outputs_papb_dir = params.dataset_division_testno + '/pab' + str(i) + '_softmax.npy'
-        torch.save(pab, outputs_papb_dir)
+        outputs_pab_dir = params.dataset_division_testno + '/pab' + str(i) + '_softmax.npy'
+        torch.save(pab, outputs_pab_dir)
