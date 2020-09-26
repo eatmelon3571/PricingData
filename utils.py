@@ -4,8 +4,7 @@ import torch.optim as optim
 from torch.autograd import Variable
 import numpy as np
 import params
-from buyer_provider.data_provider import DataProvider
-from module.net_mnist import NetMNIST, NetCNN
+from module.net_mnist import NetMNIST
 from module.net_cifar import NetCIFAR10
 from datasets.mnist import get_provider_mnist, get_test_mnist, get_test_dataset_mnist
 from datasets.cifar10 import get_provider_cifar10, get_test_cifar10, get_test_dataset_cifar10
