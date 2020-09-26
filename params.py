@@ -29,7 +29,7 @@ data_per_provider_num = 2000
 'noniid'
 'partialnoniid'
 '''
-division = 'partialnoniid'
+division = 'iid'
 
 dataset_division = dataset_dir + '/' + division
 test_no = 0                                  # 实验编号

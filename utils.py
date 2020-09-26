@@ -115,17 +115,17 @@ def softmax(in_dir, out_dir):
 
 
 def all_softmax():
-    for i in range(64):
+    for i in range(1, 64):
         in_dir = params.dataset_division_testno + '/pab' + str(i) + '.npy'
         out_dir = params.dataset_division_testno + '/pab' + str(i) + '_softmax.npy'
         softmax(in_dir, out_dir)
 
-    for i in range(64):
+    for i in range(1, 64):
         in_dir = params.dataset_division_testno + '/papb' + str(i) + '.npy'
         out_dir = params.dataset_division_testno + '/papb' + str(i) + '_softmax.npy'
         softmax(in_dir, out_dir)
 
-    for i in range(64):
+    for i in range(1, 64):
         in_dir = params.dataset_division_testno + '/fed_pab' + str(i) + '.npy'
         out_dir = params.dataset_division_testno + '/fed_pab' + str(i) + '_softmax.npy'
         softmax(in_dir, out_dir)
