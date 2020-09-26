@@ -46,12 +46,12 @@ def show():
     sum = 0
     l = int(len(papb) / 10000)
     for i in range(l):
-        print('papb', papb[i * 10000])
+        print('papb', papb[i * 10000].data)
         sum += papb[i * 10000]
-    print('sum', sum)
+    print('sum', sum.data)
     print('avg', sum / l)
-    print('pab', pab[0])
-    print('fed_pab', fed_pab[0])
+    print('pab', pab[0].data)
+    print('fed_pab', fed_pab[0].data)
 
 
 
