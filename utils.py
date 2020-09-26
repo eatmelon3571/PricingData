@@ -109,7 +109,7 @@ def save_provider_model(provider_no, net):
 # 对存储的outputs进行softmax
 def softmax(in_dir, out_dir):
     outputs = torch.load(in_dir)
-    print('outputs.data.shape', outputs.data.shape)
+    print('outputs.data.shape', outputs.data[0:3])
     temp = torch.max(outputs.data, 1)[0]
-    print('temp.shape', temp.shape)
+    print('temp.shape', temp.shape[0:3])
     torch.save(temp, out_dir)
