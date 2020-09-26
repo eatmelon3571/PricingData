@@ -49,7 +49,7 @@ def show():
         print('papb', papb[i * 10000])
         sum += papb[i * 10000]
     print('sum', sum)
-    print(sum / l)
+    print('avg', sum / l)
     print('pab', pab[0])
     print('fed_pab', fed_pab[0])
 
@@ -92,9 +92,9 @@ if __name__ == '__main__':
     # dps = load_model()
     # ScoreAverage(dps)
 
-    show()
+    # show()
 
-    # cal_avg()
+    cal_avg()
 
     # all_softmax()
 
