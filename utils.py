@@ -109,9 +109,23 @@ def save_provider_model(provider_no, net):
 # 对存储的outputs进行softmax
 def softmax(in_dir, out_dir):
     outputs = torch.load(in_dir)
-    print('outputs.data.shape', outputs.data[0:3])
+    # softmax
     temp = torch.nn.functional.softmax(outputs.data, dim=1)
-
-    print('temp.shape', temp[0:3])
-
     torch.save(temp, out_dir)
+
+
+def all_softmax():
+    for i in range(64):
+        in_dir = params.dataset_division_testno + '/pab' + str(i) + '.npy'
+        out_dir = params.dataset_division_testno + '/pab' + str(i) + '_softmax.npy'
+        softmax(in_dir, out_dir)
+
+    for i in range(64):
+        in_dir = params.dataset_division_testno + '/papb' + str(i) + '.npy'
+        out_dir = params.dataset_division_testno + '/papb' + str(i) + '_softmax.npy'
+        softmax(in_dir, out_dir)
+
+    for i in range(64):
+        in_dir = params.dataset_division_testno + '/fed_pab' + str(i) + '.npy'
+        out_dir = params.dataset_division_testno + '/fed_pab' + str(i) + '_softmax.npy'
+        softmax(in_dir, out_dir)
