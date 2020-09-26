@@ -46,14 +46,22 @@ def show():
     sum = 0
     l = int(len(papb) / 10000)
     for i in range(l):
-        print('papb', papb[i * 10000].data)
+        print('papb', papb[i * 10000].item())
         sum += papb[i * 10000]
-    print('sum', sum.data)
+    print('sum', sum.item())
     print('avg', sum / l)
-    print('pab', pab[0].data)
-    print('fed_pab', fed_pab[0].data)
+    print('pab', pab[0].item())
+    print('fed_pab', fed_pab[0].item())
+
+    outputs_papb_dir = params.dataset_division_testno + '/resualt.txt'
 
 
+def write_txt(data, txt_dir):
+    with open(txt_dir, "w+") as f:  # 追加写
+        f.write("id        sv        B\n")
+        for i in range(params.provider_num):
+            f.write(str(data[i].item()) + " ")
+        f.write("\n")
 
 
 
