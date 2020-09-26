@@ -33,6 +33,9 @@ def load_model():
 
 
 def show():
+
+    txt_dir = params.dataset_division_testno + '/resualt.txt'
+
     i = 7
     outputs_papb_dir = params.dataset_division_testno + '/papb' + str(i) + '_softmax.npy'
     papb = torch.load(outputs_papb_dir)
@@ -46,14 +49,16 @@ def show():
     sum = 0
     l = int(len(papb) / 10000)
     for i in range(l):
-        print('papb', papb[i * 10000].item())
+        print('papb', papb[i * 10000])
+        write_txt(papb[i * 10000], txt_dir)
         sum += papb[i * 10000]
-    print('sum', sum.item())
+    print('sum', sum)
     print('avg', sum / l)
-    print('pab', pab[0].item())
-    print('fed_pab', fed_pab[0].item())
+    print('pab', pab[0])
+    write_txt(pab[0], txt_dir)
+    print('fed_pab', fed_pab[0])
+    write_txt(fed_pab[0], txt_dir)
 
-    outputs_papb_dir = params.dataset_division_testno + '/resualt.txt'
 
 
 def write_txt(data, txt_dir):
