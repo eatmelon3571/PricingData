@@ -107,22 +107,6 @@ def save_provider_model(provider_no, net):
     np.save(provider_i_model_dir, net.get_w())
 
 
-# 用于保证初始化模型一致
-def creat_model():
-    for i in range(params.provider_num):
-        save_provider_model(i, get_net())
-
-
-# 用于保证初始化模型一致
-def load_model():
-    dps = []
-    for i in range(params.provider_num):
-        net = load_provider_model(i)
-        dataloader = get_data_loader(i)
-        dps.append(DataProvider(net, dataloader))
-    return dps
-
-
 # 对存储的outputs进行softmax
 def softmax(in_dir, out_dir):
     outputs = torch.load(in_dir)

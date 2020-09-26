@@ -8,13 +8,28 @@ from data_pre_cifar10.provider_data import cifar10_allocation
 from data_pre_cifar10.cifar10_decode import decode_cifar10_data_to_file
 
 from utils import create_dir, save_provider_model, get_net, load_provider_model
-from utils import get_data_loader, creat_model, load_model, softmax
+from utils import get_data_loader, softmax
 from buyer_provider.data_provider import DataProvider
 
 from core.collaborative_modelling import CollaborativeModelling, Original
 from core.collaborative_modelling import ScoreAverage, show_pa_pb_pab
 from core.score_avg import show_papbpab
 
+
+# 用于保证初始化模型一致
+def creat_model():
+    for i in range(params.provider_num):
+        save_provider_model(i, get_net())
+
+
+# 用于保证初始化模型一致
+def load_model():
+    dps = []
+    for i in range(params.provider_num):
+        net = load_provider_model(i)
+        dataloader = get_data_loader(i)
+        dps.append(DataProvider(net, dataloader))
+    return dps
 
 def show():
     outputs_papb_dir = params.dataset_division_testno + '/papb7.npy'
