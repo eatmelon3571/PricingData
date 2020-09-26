@@ -112,4 +112,6 @@ def softmax(in_dir, out_dir):
     print('outputs.data.shape', outputs.data[0:3])
     temp = torch.max(outputs.data, 1)[0]
     print('temp.shape', temp[0:3])
+    temp = torch.max(outputs.data, 1)[1]
+    print('temp.shape', temp[0:3])
     torch.save(temp, out_dir)
