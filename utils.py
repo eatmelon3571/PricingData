@@ -129,3 +129,20 @@ def all_softmax():
         in_dir = params.dataset_division_testno + '/fed_pab' + str(i) + '.npy'
         out_dir = params.dataset_division_testno + '/fed_pab' + str(i) + '_softmax.npy'
         softmax(in_dir, out_dir)
+
+
+def cal_avg():
+    for i in range(1, 64):
+        outputs_papb_dir = params.dataset_division_testno + '/papb' + str(i) + '_softmax.npy'
+        papb = torch.load(outputs_papb_dir)
+
+        sum = papb[0]
+        l = int(len(papb) / 10000)
+        for i in range(1, l):
+            sum += papb[i]
+            print(sum.shape)
+            print('sum[0]', sum[0])
+        pab = sum / l
+
+        outputs_fed_pab_dir = params.dataset_division_testno + '/pab' + str(i) + '_softmax.npy'
+        torch.save(pab, outputs_fed_pab_dir)

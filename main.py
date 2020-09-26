@@ -8,7 +8,7 @@ from data_pre_cifar10.provider_data import cifar10_allocation
 from data_pre_cifar10.cifar10_decode import decode_cifar10_data_to_file
 
 from utils import create_dir, save_provider_model, get_net, load_provider_model
-from utils import get_data_loader, softmax, all_softmax
+from utils import get_data_loader, softmax, all_softmax, cal_avg
 from buyer_provider.data_provider import DataProvider
 
 from core.collaborative_modelling import CollaborativeModelling, Original
@@ -92,8 +92,9 @@ if __name__ == '__main__':
     # dps = load_model()
     # ScoreAverage(dps)
 
-    show()
+    # show()
 
+    cal_avg()
 
     # all_softmax()
 
