@@ -136,10 +136,11 @@ def cal_avg():
         outputs_papb_dir = params.dataset_division_testno + '/papb' + str(i) + '_softmax.npy'
         papb = torch.load(outputs_papb_dir)
 
-        sum = papb[0]
+        sum = papb[0:10000]
         l = int(len(papb) / 10000)
         for i in range(1, l):
-            sum += papb[i]
+            start = i * 10000
+            sum += papb[start:start + 10000]
             print(sum.shape)
             print('sum[0]', sum[0])
         pab = sum / l
