@@ -92,9 +92,9 @@ if __name__ == '__main__':
     # dps = load_model()
     # ScoreAverage(dps)
 
-    show()
+    # show()
 
-    # cal_avg()
+    cal_avg()
 
     # all_softmax()
 

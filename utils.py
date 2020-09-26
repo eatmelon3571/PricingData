@@ -133,6 +133,8 @@ def all_softmax():
 
 def cal_avg():
     for i in range(1, 64):
+        if i != 7:
+            continue
         outputs_papb_dir = params.dataset_division_testno + '/papb' + str(i) + '_softmax.npy'
         papb = torch.load(outputs_papb_dir)
 
@@ -140,7 +142,9 @@ def cal_avg():
         l = int(len(papb) / 10000)
         for i in range(1, l):
             start = i * 10000
-            sum += papb[start:start + 10000]
+            end = start + 10000
+            print('strat', start, 'end', end)
+            sum += papb[start:end]
             print(sum.shape)
             print('sum[0]', sum[0])
         pab = sum / l
@@ -151,3 +155,6 @@ def cal_avg():
 
         outputs_pab_dir = params.dataset_division_testno + '/pab' + str(i) + '_softmax.npy'
         torch.save(pab, outputs_pab_dir)
+
+        print(outputs_papb_dir)
+        print(outputs_pab_dir)
