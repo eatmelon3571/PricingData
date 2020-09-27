@@ -15,7 +15,7 @@ from core.collaborative_modelling import CollaborativeModelling, Original
 from core.collaborative_modelling import ScoreAverage, show_pa_pb_pab
 from core.score_avg import show_papbpab
 
-from excel import Excel
+# from excel import Excel
 
 
 # 用于保证初始化模型一致
