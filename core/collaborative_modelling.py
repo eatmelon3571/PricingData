@@ -38,7 +38,7 @@ def Original(dps):
 
     # 先在本地数据集上训练至收敛----------------
 
-    '''
+    # '''
     for i in range(params.provider_num):
         print("客户端", i, "预训练")
         for j in range(params.local_time):
@@ -104,7 +104,7 @@ def ScoreAverage(dps):
         tree_list.append(Tree(i, dps[i]))
     # 先在本地数据集上训练至收敛----------------
 
-    '''
+    # '''
     for i in range(params.provider_num):
         print("客户端", i, "预训练")
         for j in range(params.local_time):
