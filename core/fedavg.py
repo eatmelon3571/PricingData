@@ -128,15 +128,23 @@ class Server:
         correct = 0
         test_loss = 0
         total = 0
-        outputs = None
+        outputs_all = None
         for i, (images, labels) in enumerate(dataloader):
             if torch.cuda.is_available():
                 images, labels = images.cuda(), labels.cuda()
 
             outputs = self.net(images)
-            # test_loss += criterion(outputs, labels).data.item()  # .data.item()取得张量的第一个数?
 
-            predicts = torch.max(outputs.data, 1)[
+            # softmax
+            temp = torch.nn.functional.softmax(outputs.data, dim=1)
+
+            # 记录下输出
+            if i == 0:
+                outputs_all = outputs
+            else:
+                outputs_all = torch.cat((outputs_all, outputs), 0)
+
+            predicts = torch.max(temp, 1)[
                 1]  # _输出的是最大概率的值，predicts输出的是最大概率值所在位置，max()函数中的1表示维度，意思是计算某一行的最大值
             correct += (predicts == labels).sum()
             total += len(images)
@@ -144,4 +152,4 @@ class Server:
         p = 1.0 * correct / total
         print('Accuracy: %.4f' % p)
 
-        return p, outputs
+        return p, outputs_all

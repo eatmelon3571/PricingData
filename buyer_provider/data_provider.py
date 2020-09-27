@@ -105,6 +105,10 @@ class DataProvider:
             images_test = images_test.cuda()
 
         outputs = self.net(images_test)
-        return outputs.clone().detach()  # 切断梯度
+
+        # softmax
+        temp = torch.nn.functional.softmax(outputs.data, dim=1)
+
+        return temp.clone().detach()  # 切断梯度
 
 
