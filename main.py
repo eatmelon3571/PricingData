@@ -131,13 +131,13 @@ if __name__ == '__main__':
 
 
     # 原本的聚合方法：直接所有节点算SV  不用聚合树
-    # dps = load_model()
-    # Original(dps)
+    dps = load_model()
+    Original(dps)
 
 
     # 协作建模
-    # dps = load_model()
-    # ScoreAverage(dps)
+    dps = load_model()
+    ScoreAverage(dps)
 
     # show()
 
