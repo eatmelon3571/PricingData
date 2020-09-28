@@ -51,7 +51,7 @@ def get_test_cifar10():
     test_data_loader = torch.utils.data.DataLoader(
         dataset=test_dataset,
         batch_size=params.batch_size,
-        shuffle=True)
+        shuffle=False)
 
     return test_data_loader
 

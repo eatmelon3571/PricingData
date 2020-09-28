@@ -77,10 +77,10 @@ def write_xls():
 
     no = 7
 
-    outputs_papb_dir = params.dataset_division_testno + '/papb' + str(no) + '_softmax.npy'
+    outputs_papb_dir = params.dataset_division_testno + '/papb' + str(no) + '.npy'
     papb = torch.load(outputs_papb_dir)
 
-    outputs_pab_dir = params.dataset_division_testno + '/pab' + str(no) + '_softmax.npy'
+    outputs_pab_dir = params.dataset_division_testno + '/pab' + str(no) + '.npy'
     pab = torch.load(outputs_pab_dir)
 
     outputs_fed_pab_dir = params.dataset_division_testno + '/fed_pab' + str(no) + '_softmax.npy'
@@ -89,7 +89,7 @@ def write_xls():
     sum = 0
     l = int(len(papb) / 10000)
 
-    for j in range(1):
+    for j in range(50):
         for i in range(l):
             e.add_data_papb(papb[i * 10000 + j])
             sum += papb[i * 10000 + j]
@@ -115,29 +115,29 @@ if __name__ == '__main__':
         # 解码数据集
         # decode_mnist_data_to_file()
         # 分配数据集
-        mnist_allocation()
+        # mnist_allocation()
         _ = 0
     elif params.dataset == 'cifar10':
         # decode_cifar10_data_to_file()
-        cifar10_allocation()
+        # cifar10_allocation()
         _ = 0
     # '''
 
     # cifar10 noniid 本地迭代次数要小一点
 
     # 先把一个网络初值存下来，然后每次都加载这个
-    creat_model()
+    # creat_model()
 
 
 
     # 原本的聚合方法：直接所有节点算SV  不用聚合树
-    dps = load_model()
-    Original(dps)
+    # dps = load_model()
+    # Original(dps)
 
 
     # 协作建模
-    dps = load_model()
-    ScoreAverage(dps)
+    # dps = load_model()
+    # ScoreAverage(dps)
 
     # show()
 

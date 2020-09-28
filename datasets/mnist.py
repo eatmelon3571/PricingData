@@ -47,7 +47,7 @@ def get_test_mnist():
     mnist_test_data_loader = torch.utils.data.DataLoader(
         dataset=mnist_test_dataset,
         batch_size=params.batch_size,
-        shuffle=True)
+        shuffle=False)
 
     return mnist_test_data_loader
 

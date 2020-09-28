@@ -140,9 +140,9 @@ class Server:
 
             # 记录下输出
             if i == 0:
-                outputs_all = outputs
+                outputs_all = temp
             else:
-                outputs_all = torch.cat((outputs_all, outputs), 0)
+                outputs_all = torch.cat((outputs_all, temp), 0)
 
             predicts = torch.max(temp, 1)[
                 1]  # _输出的是最大概率的值，predicts输出的是最大概率值所在位置，max()函数中的1表示维度，意思是计算某一行的最大值
