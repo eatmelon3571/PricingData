@@ -49,7 +49,7 @@ def score_avg(node_K_list):
 
     # 服务器做平均
     print('服务器平均')
-    outputs_avg = server.avg_outputs()
+    outputs_avg = server.avg_outputs_weighted_mean()
 
     # 保存pab
     outputs_pab_dir = params.dataset_division_testno + '/pab' + str(params.no_papa_pab) + '.npy'
