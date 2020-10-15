@@ -131,7 +131,7 @@ def print_acc(pab):
     return p.item()
 
 
-def check_acc(e: Excel, no):
+def check_acc(e, no):
     # no = 63
 
     outputs_papb_dir = params.dataset_division_testno + '/papb' + str(no) + '.npy'
