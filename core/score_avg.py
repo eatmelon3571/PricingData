@@ -144,6 +144,9 @@ class Server:
             # 首先计算每个outputs的方差, 方差拼起来
             var_list.append(torch.var(temp))
         print("var", var_list)
+        sum = 0
+        for i in range(self.client_num):
+            sum += var_list[i]
         # 放大后的方差作为平均时的权重
         outputs_avg = None
         for i in range(self.client_num):
@@ -152,6 +155,7 @@ class Server:
             else:
                 outputs_avg += self.outputs_list[i] * var_list[i]
         print("avg", outputs_avg)
+        outputs_avg = outputs_avg / sum  # 保证权重和为1
         return outputs_avg
 
     @torch.no_grad()
