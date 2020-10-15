@@ -8,9 +8,10 @@ class Excel:
         self.workbook = None
         self.worksheet = None
 
-        self.name = 1        # 1.xls
+        self.name = 2        # 1.xls
         self.xls_dir = str(self.name) + '.xls'
         self.col = 1         # 0行
+        self.row = 1
 
         self.new_workbook()
         # self.new_worksheet()
@@ -78,4 +79,25 @@ class Excel:
         self.add_data(data, max_style, other_style)
 
     def save(self):
+        print("save ", self.xls_dir)
         self.workbook.save(self.xls_dir)
+
+    def add_acc(self, acc_papb: list, acc_pab, acc_fedpab):
+        max_style = xlwt.easyxf('pattern: pattern solid, fore_colour green')
+        other_style = xlwt.easyxf('pattern: pattern solid, fore_colour light_green')
+        self.worksheet.write(self.col, self.row, acc_fedpab, other_style)
+        self.row += 1
+
+        max_style = xlwt.easyxf('pattern: pattern solid, fore_colour orange')
+        other_style = xlwt.easyxf('pattern: pattern solid, fore_colour gold')
+        self.worksheet.write(self.col, self.row, acc_pab, other_style)
+        self.row += 1
+
+        max_style = xlwt.easyxf('pattern: pattern solid, fore_colour yellow')
+        other_style = xlwt.easyxf('pattern: pattern solid, fore_colour light_yellow')
+        l = len(acc_papb)
+        for i in range(l):
+            self.worksheet.write(self.col, self.row + i, acc_papb[i], other_style)
+
+        self.col += 1
+        self.row = 1

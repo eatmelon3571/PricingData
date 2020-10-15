@@ -96,7 +96,8 @@ def add_tree_to_list(root, clients):
 class Server:
     def __init__(self):
         self.net = get_net()
-        self.clients_outputs = None  # 累计网络输出outputs
+        # self.clients_outputs = None  # 累计网络输出outputs
+        self.outputs_list = []
         self.client_num = 0  # 累计网络输出outputs时，客户端的数据量累计，用作网络权重的权
 
     def get_net_w(self):
@@ -105,36 +106,53 @@ class Server:
     def update_net_w(self, w):
         self.net.update_w(w)
 
+    '''
     def add_outputs(self, outputs):
-        """
-        增加一个客户端的网络输出outputs
-        :param outputs: 客户端网络输出outputs
-        :return:
-        """
         if self.client_num == 0:  # 本次平均，累加第一个客户端（self.w为空）
             self.clients_outputs = outputs
         else:
             self.clients_outputs += outputs
         self.client_num += 1
+    '''
+
+    def add_outputs(self, outputs):
+        self.outputs_list.append(outputs)
+        self.client_num += 1
 
     def clear_outputs(self):
-        """
-        清空累计的权重
-        """
-        self.clients_outputs = None
+        # self.clients_outputs = None
+        self.outputs_list.clear()
         self.client_num = 0
 
+    '''
     def avg_outputs(self):
-        """
-        平均客户端outputs
-        （清空累计outputs的变量）
-        返回平均的outputs
-        """
-        # 做平均
         outputs = torch.div(self.clients_outputs, self.client_num)
         self.clear_outputs()
-        # 清空计算的    以便下一次计算
         return outputs
+    '''
+
+    def avg_outputs_weighted_mean(self):
+        var_list = []
+        m = 1   # 方差放大倍率
+        print("outputs", self.outputs_list)
+        for i in range(self.client_num):
+            # 先计算softmax，要先计算softmax吗？
+            print("outputs维度", self.outputs_list[i].shape)
+            temp = torch.nn.functional.softmax(self.outputs_list[i].data, dim=1)
+            # 将方差进行放大
+            temp *= m
+            # 首先计算每个outputs的方差, 方差拼起来
+            var_list.append(torch.var(temp))
+        print("var", var_list)
+        # 放大后的方差作为平均时的权重
+        outputs_avg = None
+        for i in range(self.client_num):
+            if i == 0:
+                outputs_avg = self.outputs_list[i] * var_list[i]
+            else:
+                outputs_avg += self.outputs_list[i] * var_list[i]
+        print("avg", outputs_avg)
+        return outputs_avg
 
     @torch.no_grad()
     def test_with_outputs(self, outputs_test, labels_test):
